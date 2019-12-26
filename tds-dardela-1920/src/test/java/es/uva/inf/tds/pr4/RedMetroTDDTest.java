@@ -184,5 +184,10 @@ class RedMetroTDDTest {
 		});
 	}
 	
-	
+	@Test
+	public void testGetEstacionesCercanas() {
+		RedMetro red = new RedMetro("red1",l1,l2);
+		Estacion estaciones[]= new Estacion[2];
+		assertArrayEquals(red.getEstacionesCercanas(c1,10),estaciones);
+	}
 }

@@ -1,5 +1,6 @@
 package es.uva.inf.tds.pr4;
 
+import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
 import es.uva.inf.tds.redmetro.Linea;
 
@@ -129,7 +130,7 @@ public class RedMetro {
 	 *            Otra de las líneas.
 	 * @return Un array con las estaciones en las que coinciden las dos líneas que
 	 *         se pasan como parámetros. Si no coinciden en ninguna estación
-	 *         devuelve un array vacío.
+	 *         devuelve un array de tamaño 0.
 	 * @throws IllegalArgumentException
 	 *             si alguno de los número pasados como parámetros no corresponde
 	 *             con ninguna de las líneas de la red.
@@ -149,7 +150,7 @@ public class RedMetro {
 	 *            Nombre de otra de las estaciones.
 	 * @return Un array con las líneas que conectan las dos estaciones (sin
 	 *         transbordo) cuyos nombres se pasan como parámetros. Si no están
-	 *         conectadas por ninguna línea devuelve un array vacío.
+	 *         conectadas por ninguna línea devuelve un array de tamaño 0.
 	 * @throws IllegalArgumentException
 	 *             Si alguno de los nombres pasados como parámetros no coincide con
 	 *             ninguna estación de la red.
@@ -168,15 +169,32 @@ public class RedMetro {
 	 * @param nombreEstacion2
 	 *            Nombre de otra de las estaciones.
 	 * @return Un array con las líneas que conectan las dos estaciones (con
-	 *         transbordo) cuyos nombres se pasan como parámetros. Si no están
-	 *         conectadas por ninguna línea devuelve un array vacío.La primera línea
+	 *         transbordo) cuyos nombres se pasan como parámetros. La primera línea
 	 *         en el array contiene la estación de partida, la última línea en el
-	 *         array contiene la estación de destino.
+	 *         array contiene la estación de destino. Si no están conectadas por
+	 *         ninguna línea devuelve un array de tamaño 0.
 	 * @throws IllegalArgumentException
 	 *             Si alguno de los nombres pasados como parámetros no coincide con
 	 *             ninguna estación de la red.
 	 */
 	public Linea[] getLineasConexionConTransbordo(String nombreEstacion1, String nombreEstacion2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Devuelve un array con las estaciones de la red que se encuentran a una
+	 * distancia máxima dada desde las coordenadas dadas.
+	 * 
+	 * @param coordenadaGPS
+	 *            CoordenadasGPS que se toman como punto de referencia.
+	 * @param distanciaMaxima
+	 *            Distancia máxima (en kilómetros) para establecer la cercanía.
+	 * @return Un array con las estaciones de la red que se encuentran a una
+	 *         distancia máxima dada desde las coordenadas dadas. Si no hay
+	 *         estaciones cercanas, devuelve un array de tamaño 0.
+	 */
+	public Estacion[] getEstacionesCercanas(CoordenadasGPS coordenadaGPS, int distanciaMaxima) {
 		// TODO Auto-generated method stub
 		return null;
 	}
