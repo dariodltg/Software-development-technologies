@@ -108,13 +108,20 @@ class RedMetroTDDTest {
 	public void testGetLineas() {
 		RedMetro red = new RedMetro("red1", l1, l2);
 		Linea[] lineas = new Linea[2];
-		assertEquals(red.getLineas(),lineas);
+		assertArrayEquals(red.getLineas(),lineas);
 	}
 	
 	@Test
 	public void testGetLineasEstacion() {
 		RedMetro red = new RedMetro("red1", l1, l2);
 		Linea[] lineas = new Linea[2];
-		assertEquals(red.getLineasEstacion("estacion1"),lineas);
+		assertArrayEquals(red.getLineasEstacion("estacion1"),lineas);
+	}
+	
+	@Test
+	public void testGetEstacionesCorrespondencia() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		Estacion[] estaciones = new Estacion[2];
+		assertArrayEquals(red.getEstacionesCorrespondencia(l1,l2),estaciones);
 	}
 }

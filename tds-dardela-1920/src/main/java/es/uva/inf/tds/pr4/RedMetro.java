@@ -1,5 +1,6 @@
 package es.uva.inf.tds.pr4;
 
+import es.uva.inf.tds.redmetro.Estacion;
 import es.uva.inf.tds.redmetro.Linea;
 
 /**
@@ -99,15 +100,31 @@ public class RedMetro {
 	}
 
 	/**
-	 * Devuelve un array con las líneas que pasan por una estación concreta
+	 * Devuelve un array con las líneas que pasan por una estación concreta.
 	 * 
 	 * @param nombreEstacion
 	 *            Nombre de la estación por las que pasan las líneas que se
-	 *            devolverán
+	 *            devolverán.
 	 * @return Un array con las líneas que pasan por la estación cuyo nombre se pasa
-	 *         como parámetro
+	 *         como parámetro.
 	 */
 	public Linea[] getLineasEstacion(String nombreEstacion) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Devuelve un array con las estaciones en las que coinciden las dos líneas que
+	 * se pasan como parámetros.
+	 * 
+	 * @param l1
+	 *            Una de las líneas.
+	 * @param l2
+	 *            Otra de las líneas.
+	 * @return Un array con las estaciones en las que coinciden las dos líneas que
+	 *         se pasan como parámetros.
+	 */
+	public Estacion[] getEstacionesCorrespondencia(Linea l1, Linea l2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
