@@ -105,7 +105,7 @@ class RedMetroTDDTest {
 		red.removeLinea(3);
 		assertNull(red.getLineaColor("amarillo"));
 	}
-	
+
 	@Test
 	public void testRemoveLineaNumeroInexistente() {
 		RedMetro red = new RedMetro("red1", l1, l2);
@@ -113,21 +113,21 @@ class RedMetroTDDTest {
 			red.removeLinea(3);
 		});
 	}
-	
+
 	@Test
 	public void testGetLineas() {
 		RedMetro red = new RedMetro("red1", l1, l2);
-		Linea[] lineas = new Linea[2];
-		assertArrayEquals(red.getLineas(),lineas);
+		Linea[] lineas = { l1, l2 };
+		assertArrayEquals(red.getLineas(), lineas);
 	}
-	
+
 	@Test
 	public void testGetLineasEstacion() {
 		RedMetro red = new RedMetro("red1", l1, l2);
-		Linea[] lineas = new Linea[2];
-		assertArrayEquals(red.getLineasEstacion("estacion1"),lineas);
+		Linea[] lineas = { l1, l2 };
+		assertArrayEquals(red.getLineasEstacion("estacion1"), lineas);
 	}
-	
+
 	@Test
 	public void testGetLineasEstacionNombreInexistente() {
 		RedMetro red = new RedMetro("red1", l1, l2);
@@ -135,14 +135,14 @@ class RedMetroTDDTest {
 			red.getLineasEstacion("estacion3");
 		});
 	}
-	
+
 	@Test
 	public void testGetEstacionesCorrespondencia() {
 		RedMetro red = new RedMetro("red1", l1, l2);
-		Estacion[] estaciones = new Estacion[2];
-		assertArrayEquals(red.getEstacionesCorrespondencia(1,2),estaciones);
+		Estacion[] estaciones = { e1, e2 };
+		assertArrayEquals(red.getEstacionesCorrespondencia(1, 2), estaciones);
 	}
-	
+
 	@Test
 	public void testGetEstacionesCorrespondenciaNúmeroInexistente() {
 		RedMetro red = new RedMetro("red1", l1, l2);
@@ -150,14 +150,14 @@ class RedMetroTDDTest {
 			red.getEstacionesCorrespondencia(1, 3);
 		});
 	}
-	
+
 	@Test
 	public void testGetLineasConexionSinTransbordo() {
 		RedMetro red = new RedMetro("red1", l1, l2);
-		Linea[] lineas = new Linea[2];
-		assertArrayEquals(red.getLineasConexionSinTransbordo("estacion1","estacion2"),lineas);
+		Linea[] lineas = { l1, l2 };
+		assertArrayEquals(red.getLineasConexionSinTransbordo("estacion1", "estacion2"), lineas);
 	}
-	
+
 	@Test
 	public void testGetLineasConexionSinTransbordoNombreInexistente() {
 		RedMetro red = new RedMetro("red1", l1, l2);
@@ -165,17 +165,17 @@ class RedMetroTDDTest {
 			red.getLineasConexionSinTransbordo("estacion1", "estacion3");
 		});
 	}
-	
+
 	@Test
 	public void testGetLineasConexionConTransbordo() {
-		Estacion e3= new Estacion("estacion3",c1,c2);
+		Estacion e3 = new Estacion("estacion3", c1, c2);
 		Linea l5 = new Linea(1, "rojo", e1, e2);
 		Linea l6 = new Linea(2, "azul", e2, e3);
-		Linea[] lineas = new Linea[2];
+		Linea[] lineas = { l5, l6 };
 		RedMetro red = new RedMetro("red1", l5, l6);
-		assertArrayEquals(red.getLineasConexionConTransbordo( "estacion1","estaccion3" ),lineas);
+		assertArrayEquals(red.getLineasConexionConTransbordo("estacion1", "estacion3"), lineas);
 	}
-	
+
 	@Test
 	public void testGetLineasConexionConTransbordoNombreInexistente() {
 		RedMetro red = new RedMetro("red1", l1, l2);
@@ -183,11 +183,11 @@ class RedMetroTDDTest {
 			red.getLineasConexionConTransbordo("estacion1", "estacion3");
 		});
 	}
-	
+
 	@Test
 	public void testGetEstacionesCercanas() {
-		RedMetro red = new RedMetro("red1",l1,l2);
-		Estacion estaciones[]= new Estacion[2];
-		assertArrayEquals(red.getEstacionesCercanas(c1,10),estaciones);
+		RedMetro red = new RedMetro("red1", l1, l2);
+		Estacion estaciones[] = { e1, e2 };
+		assertArrayEquals(red.getEstacionesCercanas(c1, 10), estaciones);
 	}
 }
