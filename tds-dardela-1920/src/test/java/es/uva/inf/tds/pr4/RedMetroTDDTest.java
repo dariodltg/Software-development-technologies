@@ -103,5 +103,11 @@ class RedMetroTDDTest {
 		red.removeLinea(3);
 		assertNull(red.getLineaColor("amarillo"));
 	}
-
+	
+	@Test
+	public void testGetLineas() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		Linea[] lineas = new Linea[2];
+		assertEquals(red.getLineas(),lineas);
+	}
 }
