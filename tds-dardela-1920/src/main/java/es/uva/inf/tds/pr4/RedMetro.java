@@ -61,16 +61,31 @@ public class RedMetro {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
 	 * Añade una línea a la red
-	 * @param linea Línea que se añadirá
 	 * 
-	 * @throws IllegalArgumentException si el número de la línea no es consecutivo o el color está repetido
+	 * @param linea
+	 *            Línea que se añadirá
+	 * 
+	 * @throws IllegalArgumentException
+	 *             si el número de la línea no es consecutivo o el color está
+	 *             repetido
 	 */
 	public void addLinea(Linea linea) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	/**
+	 * Elimina una línea de la red dado su número
+	 * 
+	 * @param numero
+	 *            Número de la línea que se quiere eliminar
+	 */
+	public void removeLinea(int numero) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

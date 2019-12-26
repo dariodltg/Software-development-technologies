@@ -47,6 +47,8 @@ class RedMetroTDDTest {
 	public void testConstructorRedMetro() {
 		RedMetro red = new RedMetro("red1", l1, l2);
 		assertNotNull(red);
+		assertNotNull(l1);
+		assertNotNull(l2);
 		assertEquals(red.getNombre(), "red1");
 	}
 
@@ -61,18 +63,24 @@ class RedMetroTDDTest {
 	@Test
 	public void testGetLineaNumero() {
 		RedMetro red = new RedMetro("red1", l1, l2);
+		assertNotNull(l1);
+		assertNotNull(l2);
 		assertEquals(red.getLineaNumero(1), l1);
 	}
 
 	@Test
 	public void testGetLineaColor() {
 		RedMetro red = new RedMetro("red1", l1, l2);
+		assertNotNull(l1);
+		assertNotNull(l2);
 		assertEquals(red.getLineaColor("rojo"), l1);
 	}
 
 	@Test
 	public void testAddLinea() {
 		RedMetro red = new RedMetro("red1", l1, l2);
+		assertNotNull(l1);
+		assertNotNull(l2);
 		red.addLinea(l3);
 		assertEquals(red.getLineaColor("amarillo"), l3);
 	}
@@ -83,6 +91,17 @@ class RedMetroTDDTest {
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.addLinea(l4);
 		});
+	}
+
+	@Test
+	public void testRemoveLinea() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		assertNotNull(l1);
+		assertNotNull(l2);
+		red.addLinea(l3);
+		assertEquals(red.getLineaColor("amarillo"), l3);
+		red.removeLinea(3);
+		assertNull(red.getLineaColor("amarillo"));
 	}
 
 }
