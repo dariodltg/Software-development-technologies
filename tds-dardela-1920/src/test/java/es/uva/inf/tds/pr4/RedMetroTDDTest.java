@@ -25,6 +25,9 @@ class RedMetroTDDTest {
 	public static Estacion e2;
 	public static Linea l1;
 	public static Linea l2;
+	public static Linea l3;
+	public static Linea l4;
+
 
 	@Before
 	public void setUp() {
@@ -46,11 +49,23 @@ class RedMetroTDDTest {
 	}
 
 	@Test
-	public void testConstructorNoValido() {
+	public void testConstructorNoValidoMenosDe2Lineas() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			@SuppressWarnings("unused")
 			RedMetro red = new RedMetro("red1", l1);
 		});
 	}
-
+	
+	@Test
+	public void testGetLineaNumero() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		assertEquals(red.getLineaNumero(1),l1);
+	}
+	
+	@Test
+	public void testGetLineaColor() {
+		RedMetro red = new RedMetro("red1",l1,l2);
+		assertEquals(red.getLineaColor("rojo"),l1);
+	}
+	
 }

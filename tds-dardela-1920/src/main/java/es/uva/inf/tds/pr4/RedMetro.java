@@ -19,7 +19,8 @@ public class RedMetro {
 	 * @param lineas
 	 *            Conjunto de líneas de metro que tendrá la red
 	 * @throws IllegalArgumentException
-	 *             Si la red no tiene al menos dos líneas
+	 *             Si la red no tiene al menos dos líneas o si los números de las
+	 *             líneas no son consecutivos o si hay líneas con colores repetidos
 	 */
 	public RedMetro(String nombre, Linea... lineas) {
 		// TODO Auto-generated constructor stub
@@ -31,6 +32,32 @@ public class RedMetro {
 	 * @return El nombre de la red de líneas de metro
 	 */
 	public String getNombre() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Devuelve una linea de metro de la red a partir de su número
+	 * 
+	 * @param numero
+	 *            Número de la línea
+	 * @return La línea cuyo número se pasa como parámetro o null si no hay ninguna
+	 *         línea con ese número
+	 */
+	public Linea getLineaNumero(int numero) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Devuelve una linea de metro de la red a partir de su color
+	 * 
+	 * @param color
+	 *            Color de la línea
+	 * @return La línea cuyo color se pasa como parámetro o null si no hay ninguna
+	 *         línea con ese color
+	 */
+	public Linea getLineaColor(String color) {
 		// TODO Auto-generated method stub
 		return null;
 	}
