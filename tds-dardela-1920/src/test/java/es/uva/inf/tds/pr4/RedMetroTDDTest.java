@@ -218,4 +218,21 @@ class RedMetroTDDTest {
 		} catch (JSONException e) {
 		}
 	}
+	
+	@Test
+	public void testConstructorFromJSON() {
+		File jsonInputFile = new File("testGetJSON.json");
+		try {
+			JSONObject jobj = new JSONObject("");
+			InputStream is = new FileInputStream(jsonInputFile);
+			JsonReader jsonReader = Json.createReader(is);
+			JSONObject jsonObject = (JSONObject) jsonReader.readObject();
+			RedMetro red1 = new RedMetro(jsonObject);
+			RedMetro red2 = new RedMetro("red1",l1,l2);
+			assertEquals(red1.getLineas(),red2.getLineas());
+		} catch (FileNotFoundException e) {
+		} catch (JSONException e) {
+		}
+		
+	}
 }

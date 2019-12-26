@@ -1,5 +1,7 @@
 package es.uva.inf.tds.pr4;
 
+import org.json.JSONObject;
+
 import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
 import es.uva.inf.tds.redmetro.Linea;
@@ -25,6 +27,16 @@ public class RedMetro {
 	 *             líneas no son consecutivos o si hay líneas con colores repetidos.
 	 */
 	public RedMetro(String nombre, Linea... lineas) {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * Constructor de una red de líneas de metro a partir de un JSONObject
+	 * 
+	 * @param red
+	 *            JSONObject que representa la red.
+	 */
+	public RedMetro(JSONObject red) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -200,8 +212,8 @@ public class RedMetro {
 	}
 
 	/**
-	 * Devuelve un String en formato JSON que contiene información sobre todas las líneas de la
-	 * red.
+	 * Devuelve un String en formato JSON que contiene información sobre todas las
+	 * líneas de la red.
 	 */
 	public String getJSON() {
 		// TODO Auto-generated method stub
