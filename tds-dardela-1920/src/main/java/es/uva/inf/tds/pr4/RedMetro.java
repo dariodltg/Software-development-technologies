@@ -199,4 +199,13 @@ public class RedMetro {
 		return null;
 	}
 
+	/**
+	 * Devuelve un String en formato JSON que contiene información sobre todas las líneas de la
+	 * red.
+	 */
+	public String getJSON() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

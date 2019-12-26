@@ -2,9 +2,22 @@ package es.uva.inf.tds.pr4;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
@@ -189,5 +202,20 @@ class RedMetroTDDTest {
 		RedMetro red = new RedMetro("red1", l1, l2);
 		Estacion estaciones[] = { e1, e2 };
 		assertArrayEquals(red.getEstacionesCercanas(c1, 10), estaciones);
+	}
+
+	@Test
+	public void testGetJSON() {
+		File jsonInputFile = new File("testGetJSON.json");
+		try {
+			JSONObject jobj = new JSONObject("");
+			InputStream is = new FileInputStream(jsonInputFile);
+			JsonReader jsonReader = Json.createReader(is);
+			JSONObject jsonObject = (JSONObject) jsonReader.readObject();
+			RedMetro red = new RedMetro("red1", l1, l2);
+			JSONAssert.assertEquals(red.getJSON(), jsonObject.toString(), true);
+		} catch (FileNotFoundException e) {
+		} catch (JSONException e) {
+		}
 	}
 }

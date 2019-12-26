@@ -1,0 +1,68 @@
+{
+	"nombre": "red1",
+	"lineas": [
+		{
+			"numero": 1,
+			"color": "rojo",
+			"estaciones": [
+				{
+					"nombre": "estacion1",
+					"coordenadasGPS": [
+						{
+							"latitud": "040°42'46\"N",
+							"longitud": "074°00'21\"O"
+						},
+						{
+							"latitud": "040°42'46\"N",
+							"longitud": "074°00'20\"O"
+						}
+					]
+				},
+				{
+					"nombre": "estacion2",
+					"coordenadasGPS": [
+						{
+							"latitud": "040°42'46\"N",
+							"longitud": "074°00'19\"O"
+						},
+						{
+							"latitud": "040°42'46\"N",
+							"longitud": "074°00'18\"O"
+						}
+					]
+				}
+			]
+		},{
+			"numero": 2,
+			"color": "azul",
+			"estaciones": [
+				{
+					"nombre": "estacion1",
+					"coordenadasGPS": [
+						{
+							"latitud": "040°42'46\"N",
+							"longitud": "074°00'21\"O"
+						},
+						{
+							"latitud": "040°42'46\"N",
+							"longitud": "074°00'20\"O"
+						}
+					]
+				},
+				{
+					"nombre": "estacion2",
+					"coordenadasGPS": [
+						{
+							"latitud": "040°42'46\"N",
+							"longitud": "074°00'19\"O"
+						},
+						{
+							"latitud": "040°42'46\"N",
+							"longitud": "074°00'18\"O"
+						}
+					]
+				}
+			]
+		}
+	]
+}
