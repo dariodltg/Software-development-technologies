@@ -98,4 +98,18 @@ public class RedMetro {
 		return null;
 	}
 
+	/**
+	 * Devuelve un array con las líneas que pasan por una estación concreta
+	 * 
+	 * @param nombreEstacion
+	 *            Nombre de la estación por las que pasan las líneas que se
+	 *            devolverán
+	 * @return Un array con las líneas que pasan por la estación cuyo nombre se pasa
+	 *         como parámetro
+	 */
+	public Linea[] getLineasEstacion(String nombreEstacion) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

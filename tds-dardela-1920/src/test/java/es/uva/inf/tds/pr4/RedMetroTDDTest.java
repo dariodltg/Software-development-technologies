@@ -110,4 +110,11 @@ class RedMetroTDDTest {
 		Linea[] lineas = new Linea[2];
 		assertEquals(red.getLineas(),lineas);
 	}
+	
+	@Test
+	public void testGetLineasEstacion() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		Linea[] lineas = new Linea[2];
+		assertEquals(red.getLineasEstacion("estacion1"),lineas);
+	}
 }
