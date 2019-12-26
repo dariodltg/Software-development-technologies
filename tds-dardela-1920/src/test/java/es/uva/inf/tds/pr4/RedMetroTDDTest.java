@@ -105,6 +105,14 @@ class RedMetroTDDTest {
 	}
 	
 	@Test
+	public void testRemoveLineaNumeroInexistente() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.removeLinea(3);
+		});
+	}
+	
+	@Test
 	public void testGetLineas() {
 		RedMetro red = new RedMetro("red1", l1, l2);
 		Linea[] lineas = new Linea[2];
@@ -119,9 +127,25 @@ class RedMetroTDDTest {
 	}
 	
 	@Test
+	public void testGetLineasEstacionNombreInexistente() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getLineasEstacion("estacion3");
+		});
+	}
+	
+	@Test
 	public void testGetEstacionesCorrespondencia() {
 		RedMetro red = new RedMetro("red1", l1, l2);
 		Estacion[] estaciones = new Estacion[2];
-		assertArrayEquals(red.getEstacionesCorrespondencia(l1,l2),estaciones);
+		assertArrayEquals(red.getEstacionesCorrespondencia(1,2),estaciones);
+	}
+	
+	@Test
+	public void testGetEstacionesCorrespondenciaNúmeroInexistente() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getEstacionesCorrespondencia(1, 3);
+		});
 	}
 }

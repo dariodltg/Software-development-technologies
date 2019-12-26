@@ -20,7 +20,7 @@ public class RedMetro {
 	 * @param lineas
 	 *            Conjunto de líneas de metro que tendrá la red.
 	 * @throws IllegalArgumentException
-	 *             Si la red no tiene al menos dos líneas o si los números de las
+	 *             Si la red no tiene al menos 2 líneas o si los números de las
 	 *             líneas no son consecutivos o si hay líneas con colores repetidos.
 	 */
 	public RedMetro(String nombre, Linea... lineas) {
@@ -83,6 +83,9 @@ public class RedMetro {
 	 * 
 	 * @param numero
 	 *            Número de la línea que se quiere eliminar.
+	 * @throws IllegalArgumentException
+	 *             si el número no corresponde a ninguna línea o si al quitarlo
+	 *             dejara a la red con menos de 2 líneas.
 	 */
 	public void removeLinea(int numero) {
 		// TODO Auto-generated method stub
@@ -107,6 +110,9 @@ public class RedMetro {
 	 *            devolverán.
 	 * @return Un array con las líneas que pasan por la estación cuyo nombre se pasa
 	 *         como parámetro.
+	 * @throws IllegalArgumentException
+	 *             si el nombre que se pasa como parámetro no coincide con el de
+	 *             ninguna estación de la red.
 	 */
 	public Linea[] getLineasEstacion(String nombreEstacion) {
 		// TODO Auto-generated method stub
@@ -122,9 +128,13 @@ public class RedMetro {
 	 * @param l2
 	 *            Otra de las líneas.
 	 * @return Un array con las estaciones en las que coinciden las dos líneas que
-	 *         se pasan como parámetros.
+	 *         se pasan como parámetros. Si no coinciden en ninguna estación
+	 *         devuelve un array vacío.
+	 * @throws IllegalArgumentException
+	 *             si alguno de los número pasados como parámetros no corresponde
+	 *             con ninguna de las líneas de la red.
 	 */
-	public Estacion[] getEstacionesCorrespondencia(Linea l1, Linea l2) {
+	public Estacion[] getEstacionesCorrespondencia(int numL1, int numL2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
