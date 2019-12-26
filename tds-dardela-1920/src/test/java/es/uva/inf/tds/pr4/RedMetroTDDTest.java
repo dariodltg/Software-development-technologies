@@ -165,4 +165,24 @@ class RedMetroTDDTest {
 			red.getLineasConexionSinTransbordo("estacion1", "estacion3");
 		});
 	}
+	
+	@Test
+	public void testGetLineasConexionConTransbordo() {
+		Estacion e3= new Estacion("estacion3",c1,c2);
+		Linea l5 = new Linea(1, "rojo", e1, e2);
+		Linea l6 = new Linea(2, "azul", e2, e3);
+		Linea[] lineas = new Linea[2];
+		RedMetro red = new RedMetro("red1", l5, l6);
+		assertArrayEquals(red.getLineasConexionConTransbordo( "estacion1","estaccion3" ),lineas);
+	}
+	
+	@Test
+	public void testGetLineasConexionConTransbordoNombreInexistente() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getLineasConexionConTransbordo("estacion1", "estacion3");
+		});
+	}
+	
+	
 }

@@ -159,4 +159,26 @@ public class RedMetro {
 		return null;
 	}
 
+	/**
+	 * Devuelve un array con las líneas que conectan dos estaciones (con
+	 * transbordo).
+	 * 
+	 * @param nombreEstacion1
+	 *            Nombre de una de las estaciones.
+	 * @param nombreEstacion2
+	 *            Nombre de otra de las estaciones.
+	 * @return Un array con las líneas que conectan las dos estaciones (con
+	 *         transbordo) cuyos nombres se pasan como parámetros. Si no están
+	 *         conectadas por ninguna línea devuelve un array vacío.La primera línea
+	 *         en el array contiene la estación de partida, la última línea en el
+	 *         array contiene la estación de destino.
+	 * @throws IllegalArgumentException
+	 *             Si alguno de los nombres pasados como parámetros no coincide con
+	 *             ninguna estación de la red.
+	 */
+	public Linea[] getLineasConexionConTransbordo(String nombreEstacion1, String nombreEstacion2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
