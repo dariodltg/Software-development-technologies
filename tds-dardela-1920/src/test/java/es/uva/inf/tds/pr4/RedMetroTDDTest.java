@@ -28,7 +28,6 @@ class RedMetroTDDTest {
 	public static Linea l3;
 	public static Linea l4;
 
-
 	@Before
 	public void setUp() {
 		c1 = new CoordenadasGPS("040°42'46\"N", "074°00'21\"O");
@@ -39,6 +38,9 @@ class RedMetroTDDTest {
 		e2 = new Estacion("estacion2", c3, c4);
 		l1 = new Linea(1, "rojo", e1, e2);
 		l2 = new Linea(2, "azul", e1, e2);
+		l3 = new Linea(3, "amarillo", e1, e2);
+		l4 = new Linea(3, "azul", e1, e2);
+
 	}
 
 	@Test
@@ -55,17 +57,32 @@ class RedMetroTDDTest {
 			RedMetro red = new RedMetro("red1", l1);
 		});
 	}
-	
+
 	@Test
 	public void testGetLineaNumero() {
 		RedMetro red = new RedMetro("red1", l1, l2);
-		assertEquals(red.getLineaNumero(1),l1);
+		assertEquals(red.getLineaNumero(1), l1);
 	}
-	
+
 	@Test
 	public void testGetLineaColor() {
-		RedMetro red = new RedMetro("red1",l1,l2);
-		assertEquals(red.getLineaColor("rojo"),l1);
+		RedMetro red = new RedMetro("red1", l1, l2);
+		assertEquals(red.getLineaColor("rojo"), l1);
 	}
-	
+
+	@Test
+	public void testAddLinea() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		red.addLinea(l3);
+		assertEquals(red.getLineaColor("amarillo"), l3);
+	}
+
+	@Test
+	public void testAddLineaNoValidoColorRepetido() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.addLinea(l4);
+		});
+	}
+
 }
