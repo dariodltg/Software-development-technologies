@@ -1,6 +1,5 @@
 {
-	"nombre": "red1",
-	"lineas": [
+	[
 		{
 			"numero": 1,
 			"color": "rojo",
@@ -32,7 +31,8 @@
 					]
 				}
 			]
-		},{
+		},
+		{
 			"numero": 2,
 			"color": "azul",
 			"estaciones": [

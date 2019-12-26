@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 import org.json.JSONException;
@@ -17,8 +16,6 @@ import org.junit.Before;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-
 import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
 import es.uva.inf.tds.redmetro.Linea;
@@ -60,24 +57,22 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testConstructorRedMetro() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertNotNull(red);
 		assertNotNull(l1);
 		assertNotNull(l2);
-		assertEquals(red.getNombre(), "red1");
 	}
 
 	@Test
 	public void testConstructorNoValidoMenosDe2Lineas() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			@SuppressWarnings("unused")
-			RedMetro red = new RedMetro("red1", l1);
+			new RedMetro(l1);
 		});
 	}
 
 	@Test
 	public void testGetLineaNumero() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		assertNotNull(l1);
 		assertNotNull(l2);
 		assertEquals(red.getLineaNumero(1), l1);
@@ -85,7 +80,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetLineaColor() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		assertNotNull(l1);
 		assertNotNull(l2);
 		assertEquals(red.getLineaColor("rojo"), l1);
@@ -93,7 +88,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testAddLinea() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		assertNotNull(l1);
 		assertNotNull(l2);
 		red.addLinea(l3);
@@ -102,7 +97,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testAddLineaNoValidoColorRepetido() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.addLinea(l4);
 		});
@@ -110,7 +105,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testRemoveLinea() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		assertNotNull(l1);
 		assertNotNull(l2);
 		red.addLinea(l3);
@@ -121,7 +116,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testRemoveLineaNumeroInexistente() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.removeLinea(3);
 		});
@@ -129,21 +124,21 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetLineas() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		Linea[] lineas = { l1, l2 };
 		assertArrayEquals(red.getLineas(), lineas);
 	}
 
 	@Test
 	public void testGetLineasEstacion() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		Linea[] lineas = { l1, l2 };
 		assertArrayEquals(red.getLineasEstacion("estacion1"), lineas);
 	}
 
 	@Test
 	public void testGetLineasEstacionNombreInexistente() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.getLineasEstacion("estacion3");
 		});
@@ -151,14 +146,14 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetEstacionesCorrespondencia() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		Estacion[] estaciones = { e1, e2 };
 		assertArrayEquals(red.getEstacionesCorrespondencia(1, 2), estaciones);
 	}
 
 	@Test
 	public void testGetEstacionesCorrespondenciaNúmeroInexistente() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.getEstacionesCorrespondencia(1, 3);
 		});
@@ -166,14 +161,14 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetLineasConexionSinTransbordo() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		Linea[] lineas = { l1, l2 };
 		assertArrayEquals(red.getLineasConexionSinTransbordo("estacion1", "estacion2"), lineas);
 	}
 
 	@Test
 	public void testGetLineasConexionSinTransbordoNombreInexistente() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.getLineasConexionSinTransbordo("estacion1", "estacion3");
 		});
@@ -185,13 +180,13 @@ class RedMetroTDDTest {
 		Linea l5 = new Linea(1, "rojo", e1, e2);
 		Linea l6 = new Linea(2, "azul", e2, e3);
 		Linea[] lineas = { l5, l6 };
-		RedMetro red = new RedMetro("red1", l5, l6);
+		RedMetro red = new RedMetro( l5, l6);
 		assertArrayEquals(red.getLineasConexionConTransbordo("estacion1", "estacion3"), lineas);
 	}
 
 	@Test
 	public void testGetLineasConexionConTransbordoNombreInexistente() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.getLineasConexionConTransbordo("estacion1", "estacion3");
 		});
@@ -199,7 +194,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetEstacionesCercanas() {
-		RedMetro red = new RedMetro("red1", l1, l2);
+		RedMetro red = new RedMetro( l1, l2);
 		Estacion estaciones[] = { e1, e2 };
 		assertArrayEquals(red.getEstacionesCercanas(c1, 10), estaciones);
 	}
@@ -208,11 +203,11 @@ class RedMetroTDDTest {
 	public void testGetJSON() {
 		File jsonInputFile = new File("testGetJSON.json");
 		try {
-			JSONObject jobj = new JSONObject("");
+			new JSONObject("");
 			InputStream is = new FileInputStream(jsonInputFile);
 			JsonReader jsonReader = Json.createReader(is);
 			JSONObject jsonObject = (JSONObject) jsonReader.readObject();
-			RedMetro red = new RedMetro("red1", l1, l2);
+			RedMetro red = new RedMetro( l1, l2);
 			JSONAssert.assertEquals(red.getJSON(), jsonObject.toString(), true);
 		} catch (FileNotFoundException e) {
 		} catch (JSONException e) {
@@ -223,12 +218,12 @@ class RedMetroTDDTest {
 	public void testConstructorFromJSON() {
 		File jsonInputFile = new File("testGetJSON.json");
 		try {
-			JSONObject jobj = new JSONObject("");
+			new JSONObject("");
 			InputStream is = new FileInputStream(jsonInputFile);
 			JsonReader jsonReader = Json.createReader(is);
 			JSONObject jsonObject = (JSONObject) jsonReader.readObject();
 			RedMetro red1 = new RedMetro(jsonObject);
-			RedMetro red2 = new RedMetro("red1",l1,l2);
+			RedMetro red2 = new RedMetro(l1,l2);
 			assertEquals(red1.getLineas(),red2.getLineas());
 		} catch (FileNotFoundException e) {
 		} catch (JSONException e) {

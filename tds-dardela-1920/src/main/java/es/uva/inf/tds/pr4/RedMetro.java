@@ -18,15 +18,13 @@ public class RedMetro {
 	/**
 	 * Constructor de una red de líneas de metro.
 	 * 
-	 * @param nombre
-	 *            Nombre de la red.
 	 * @param lineas
 	 *            Conjunto de líneas de metro que tendrá la red.
 	 * @throws IllegalArgumentException
 	 *             Si la red no tiene al menos 2 líneas o si los números de las
 	 *             líneas no son consecutivos o si hay líneas con colores repetidos.
 	 */
-	public RedMetro(String nombre, Linea... lineas) {
+	public RedMetro(Linea... lineas) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -38,16 +36,6 @@ public class RedMetro {
 	 */
 	public RedMetro(JSONObject red) {
 		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * Devuelve el nombre de la red de líneas de metro.
-	 * 
-	 * @return El nombre de la red de líneas de metro.
-	 */
-	public String getNombre() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
