@@ -3,6 +3,7 @@ package es.uva.inf.tds.pr4;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.Before;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import es.uva.inf.maps.CoordenadasGPS;
@@ -15,6 +16,7 @@ import es.uva.inf.tds.redmetro.Linea;
  * @author dardela
  *
  */
+@Tag("TDD")
 class RedMetroTDDTest {
 
 	public static CoordenadasGPS c1;
@@ -146,6 +148,21 @@ class RedMetroTDDTest {
 		RedMetro red = new RedMetro("red1", l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.getEstacionesCorrespondencia(1, 3);
+		});
+	}
+	
+	@Test
+	public void testGetLineasConexionSinTransbordo() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		Linea[] lineas = new Linea[2];
+		assertArrayEquals(red.getLineasConexionSinTransbordo("estacion1","estacion2"),lineas);
+	}
+	
+	@Test
+	public void testGetLineasConexionSinTransbordoNombreInexistente() {
+		RedMetro red = new RedMetro("red1", l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getLineasConexionSinTransbordo("estacion1", "estacion3");
 		});
 	}
 }
