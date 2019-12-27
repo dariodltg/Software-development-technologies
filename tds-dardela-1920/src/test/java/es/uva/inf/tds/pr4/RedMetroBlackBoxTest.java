@@ -37,5 +37,18 @@ class RedMetroBlackBoxTest {
 		l3 = new Linea(3, "amarillo", e1, e2);
 		l4 = new Linea(3, "azul", e1, e2);
 	}
-
+	
+	@Test
+	public void testConstructorNoValidoNumerosNoConsecutivos() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new RedMetro(l1,l3);
+		});
+	}
+	
+	@Test
+	public void testConstructorNoValidoColoresRepetidos() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new RedMetro(l1,l3);
+		});
+	}
 }

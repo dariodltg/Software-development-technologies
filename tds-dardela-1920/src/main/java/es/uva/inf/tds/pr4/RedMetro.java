@@ -1,7 +1,5 @@
 package es.uva.inf.tds.pr4;
 
-import org.json.JSONObject;
-
 import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
 import es.uva.inf.tds.redmetro.Linea;
