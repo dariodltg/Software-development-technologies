@@ -70,4 +70,12 @@ class RedMetroBlackBoxTest {
 			red.removeLinea(2);
 		});
 	}
+	
+	@Test
+	public void testGetEstacionesCorrespondenciaPrimerNúmeroInexistente() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getEstacionesCorrespondencia(3, 1);
+		});
+	}
 }
