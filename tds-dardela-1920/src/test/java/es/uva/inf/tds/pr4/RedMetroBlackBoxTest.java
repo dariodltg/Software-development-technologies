@@ -86,4 +86,12 @@ class RedMetroBlackBoxTest {
 			red.getLineasConexionSinTransbordo("estacion3", "estacion1");
 		});
 	}
+	
+	@Test
+	public void testGetLineasConexionConTransbordoPrimerNombreInexistente() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getLineasConexionConTransbordo("estacion3", "estacion1");
+		});
+	}
 }
