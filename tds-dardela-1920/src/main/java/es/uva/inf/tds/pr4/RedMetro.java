@@ -29,12 +29,12 @@ public class RedMetro {
 	}
 
 	/**
-	 * Constructor de una red de líneas de metro a partir de un JSONObject
+	 * Constructor de una red de líneas de metro a partir de un String en formato json
 	 * 
 	 * @param red
-	 *            JSONObject que representa la red.
+	 *            String en formato json que representa la red.
 	 */
-	public RedMetro(JSONObject red) {
+	public RedMetro(String red) {
 		// TODO Auto-generated constructor stub
 	}
 

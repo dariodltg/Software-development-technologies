@@ -13,6 +13,7 @@ import javax.json.JsonReader;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -39,8 +40,9 @@ class RedMetroTDDTest {
 	public static Linea l2;
 	public static Linea l3;
 	public static Linea l4;
+	public static String json;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		c1 = new CoordenadasGPS("040°42'46\"N", "074°00'21\"O");
 		c2 = new CoordenadasGPS("040°42'46\"N", "074°00'20\"O");
@@ -52,15 +54,43 @@ class RedMetroTDDTest {
 		l2 = new Linea(2, "azul", e1, e2);
 		l3 = new Linea(3, "amarillo", e1, e2);
 		l4 = new Linea(3, "azul", e1, e2);
-
+		json = "[\r\n" + "		{\r\n" + "			\"numero\": 1,\r\n" + "			\"color\": \"rojo\",\r\n"
+				+ "			\"estaciones\": [\r\n" + "				{\r\n"
+				+ "					\"nombre\": \"estacion1\",\r\n" + "					\"coordenadasGPS\": [\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'21\\\"O\"\r\n" + "						},\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'20\\\"O\"\r\n" + "						}\r\n"
+				+ "					]\r\n" + "				},\r\n" + "				{\r\n"
+				+ "					\"nombre\": \"estacion2\",\r\n" + "					\"coordenadasGPS\": [\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'19\\\"O\"\r\n" + "						},\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'18\\\"O\"\r\n" + "						}\r\n"
+				+ "					]\r\n" + "				}\r\n" + "			]\r\n" + "		},\r\n" + "		{\r\n"
+				+ "			\"numero\": 2,\r\n" + "			\"color\": \"azul\",\r\n"
+				+ "			\"estaciones\": [\r\n" + "				{\r\n"
+				+ "					\"nombre\": \"estacion1\",\r\n" + "					\"coordenadasGPS\": [\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'21\\\"O\"\r\n" + "						},\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'20\\\"O\"\r\n" + "						}\r\n"
+				+ "					]\r\n" + "				},\r\n" + "				{\r\n"
+				+ "					\"nombre\": \"estacion2\",\r\n" + "					\"coordenadasGPS\": [\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'19\\\"O\"\r\n" + "						},\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'18\\\"O\"\r\n" + "						}\r\n"
+				+ "					]\r\n" + "				}\r\n" + "			]\r\n" + "		}\r\n" + "	]";
 	}
 
 	@Test
 	public void testConstructorRedMetro() {
 		RedMetro red = new RedMetro(l1, l2);
-		assertNotNull(red);
 		assertNotNull(l1);
 		assertNotNull(l2);
+		assertNotNull(red);
+		fail("Not yet implemented");
 	}
 
 	@Test
@@ -72,7 +102,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetLineaNumero() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertNotNull(l1);
 		assertNotNull(l2);
 		assertEquals(red.getLineaNumero(1), l1);
@@ -80,7 +110,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetLineaColor() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertNotNull(l1);
 		assertNotNull(l2);
 		assertEquals(red.getLineaColor("rojo"), l1);
@@ -88,7 +118,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testAddLinea() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertNotNull(l1);
 		assertNotNull(l2);
 		red.addLinea(l3);
@@ -97,7 +127,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testAddLineaNoValidoColorRepetido() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.addLinea(l4);
 		});
@@ -105,7 +135,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testRemoveLinea() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertNotNull(l1);
 		assertNotNull(l2);
 		red.addLinea(l3);
@@ -116,7 +146,7 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testRemoveLineaNumeroInexistente() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.removeLinea(3);
 		});
@@ -124,14 +154,14 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetLineas() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		Linea[] lineas = { l1, l2 };
 		assertArrayEquals(red.getLineas(), lineas);
 	}
 
 	@Test
 	public void testGetLineasEstacion() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		Linea[] lineas = { l1, l2 };
 		assertArrayEquals(red.getLineasEstacion("estacion1"), lineas);
 	}
@@ -146,14 +176,14 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetEstacionesCorrespondencia() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		Estacion[] estaciones = { e1, e2 };
 		assertArrayEquals(red.getEstacionesCorrespondencia(1, 2), estaciones);
 	}
 
 	@Test
 	public void testGetEstacionesCorrespondenciaNúmeroInexistente() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.getEstacionesCorrespondencia(1, 3);
 		});
@@ -161,14 +191,14 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetLineasConexionSinTransbordo() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		Linea[] lineas = { l1, l2 };
 		assertArrayEquals(red.getLineasConexionSinTransbordo("estacion1", "estacion2"), lineas);
 	}
 
 	@Test
 	public void testGetLineasConexionSinTransbordoNombreInexistente() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.getLineasConexionSinTransbordo("estacion1", "estacion3");
 		});
@@ -180,13 +210,13 @@ class RedMetroTDDTest {
 		Linea l5 = new Linea(1, "rojo", e1, e2);
 		Linea l6 = new Linea(2, "azul", e2, e3);
 		Linea[] lineas = { l5, l6 };
-		RedMetro red = new RedMetro( l5, l6);
+		RedMetro red = new RedMetro(l5, l6);
 		assertArrayEquals(red.getLineasConexionConTransbordo("estacion1", "estacion3"), lineas);
 	}
 
 	@Test
 	public void testGetLineasConexionConTransbordoNombreInexistente() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.getLineasConexionConTransbordo("estacion1", "estacion3");
 		});
@@ -194,40 +224,30 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testGetEstacionesCercanas() {
-		RedMetro red = new RedMetro( l1, l2);
+		RedMetro red = new RedMetro(l1, l2);
 		Estacion estaciones[] = { e1, e2 };
 		assertArrayEquals(red.getEstacionesCercanas(c1, 10), estaciones);
 	}
 
 	@Test
 	public void testGetJSON() {
-		File jsonInputFile = new File("testGetJSON.json");
+		RedMetro red = new RedMetro(l1, l2);
+		assertNotNull(red);
 		try {
-			new JSONObject("");
-			InputStream is = new FileInputStream(jsonInputFile);
-			JsonReader jsonReader = Json.createReader(is);
-			JSONObject jsonObject = (JSONObject) jsonReader.readObject();
-			RedMetro red = new RedMetro( l1, l2);
-			JSONAssert.assertEquals(red.getJSON(), jsonObject.toString(), true);
-		} catch (FileNotFoundException e) {
+			JSONAssert.assertEquals(red.getJSON(), json, true);
 		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
-	
+
 	@Test
 	public void testConstructorFromJSON() {
-		File jsonInputFile = new File("testGetJSON.json");
-		try {
-			new JSONObject("");
-			InputStream is = new FileInputStream(jsonInputFile);
-			JsonReader jsonReader = Json.createReader(is);
-			JSONObject jsonObject = (JSONObject) jsonReader.readObject();
-			RedMetro red1 = new RedMetro(jsonObject);
-			RedMetro red2 = new RedMetro(l1,l2);
-			assertEquals(red1.getLineas(),red2.getLineas());
-		} catch (FileNotFoundException e) {
-		} catch (JSONException e) {
-		}
-		
+		RedMetro red1 = new RedMetro(json);
+		RedMetro red2 = new RedMetro(l1, l2);
+		assertNotNull(red1.getLineas());
+		assertNotNull(red2.getLineas());
+		assertEquals(red1.getLineas(), red2.getLineas());
 	}
 }
