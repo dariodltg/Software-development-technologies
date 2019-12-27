@@ -62,4 +62,12 @@ class RedMetroBlackBoxTest {
 			red.addLinea(l5);
 		});
 	}
+	
+	@Test
+	public void testRemoveLinea2LineasRestantes() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.removeLinea(2);
+		});
+	}
 }
