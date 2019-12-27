@@ -23,7 +23,8 @@ class RedMetroBlackBoxTest {
 	public static Linea l2;
 	public static Linea l3;
 	public static Linea l4;
-	
+	public static Linea l5;
+
 	@BeforeEach
 	public void setUp() {
 		c1 = new CoordenadasGPS("040°42'46\"N", "074°00'21\"O");
@@ -36,6 +37,8 @@ class RedMetroBlackBoxTest {
 		l2 = new Linea(2, "azul", e1, e2);
 		l3 = new Linea(3, "amarillo", e1, e2);
 		l4 = new Linea(3, "azul", e1, e2);
+		l5 = new Linea(4, "naranja", e1, e2);
+
 	}
 	
 	@Test
@@ -49,6 +52,14 @@ class RedMetroBlackBoxTest {
 	public void testConstructorNoValidoColoresRepetidos() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new RedMetro(l1,l3);
+		});
+	}
+	
+	@Test
+	public void testAddLineaNoValidoNumeroNoConsecutivo() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.addLinea(l5);
 		});
 	}
 }
