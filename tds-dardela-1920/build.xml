@@ -40,11 +40,11 @@
 			<arg line="-c 'mvn compile test-compile'" />
 		</exec>
 	</target>
-	
+
 	<!-- Objetivo ejecutarTestsTDDyCajaNegra -->
 	<target name="ejecutarTestSinAislamiento"
-		description= "todo sin aislamiento"
-		depends="ejecutarTestsTDDyCajaNegra,ejecutarPruebasSecuencia,ejecutarCajaBlanca"/>
+		description="todo sin aislamiento"
+		depends="ejecutarTestsTDDyCajaNegra,ejecutarPruebasSecuencia,ejecutarCajaBlanca" />
 
 	<!-- Objetivo ejecutarTestsTDDyCajaNegra -->
 	<target name="ejecutarTestsTDDyCajaNegra"
@@ -62,7 +62,7 @@
 			<arg line="-c 'mvn test -P TDDyBlackBox'" />
 		</exec>
 	</target>
-	
+
 	<!-- Objetivo ejecutarTestEnAislamiento -->
 	<target name="ejecutarTestEnAislamiento"
 		description="pruebas de caja blanca en aislamiento"
@@ -95,24 +95,23 @@
 			<arg line="-c 'mvn test -P Sequence'" />
 		</exec>
 	</target>
-	
+
 	<!-- Objetivo ejecutarCajaBlanca -->
-		<target name="ejecutarCajaBlanca"
-			description="caja blanca"
-			depends="ejecutarCajaBlanca_win, ejecutarCajaBlanca_unix" />
-		<target name="ejecutarCajaBlanca_win"
-			description="ejecutarCajaBlanca windows" if="isWindows">
-			<exec dir="." executable="cmd">
-				<arg line="/c mvn test -P WhiteBox" />
-			</exec>
-		</target>
-		<target name="ejecutarCajaBlanca_unix"
-			description="ejecutarCajaBlanca unix" if="isUnix">
-			<exec dir="." executable="sh">
-				<arg line="-c 'mvn test -P WhiteBox'" />
-			</exec>
-		</target>
-	
+	<target name="ejecutarCajaBlanca" description="caja blanca"
+		depends="ejecutarCajaBlanca_win, ejecutarCajaBlanca_unix" />
+	<target name="ejecutarCajaBlanca_win"
+		description="ejecutarCajaBlanca windows" if="isWindows">
+		<exec dir="." executable="cmd">
+			<arg line="/c mvn test -P WhiteBox" />
+		</exec>
+	</target>
+	<target name="ejecutarCajaBlanca_unix"
+		description="ejecutarCajaBlanca unix" if="isUnix">
+		<exec dir="." executable="sh">
+			<arg line="-c 'mvn test -P WhiteBox'" />
+		</exec>
+	</target>
+
 	<!-- Objetivo obtenerInformeCobertura -->
 	<target name="obtenerInformeCobertura"
 		description="obtener informes de cobertura"
