@@ -17,6 +17,7 @@ class RedMetroBlackBoxTest {
 	public static CoordenadasGPS c2;
 	public static CoordenadasGPS c3;
 	public static CoordenadasGPS c4;
+	public static CoordenadasGPS c5;
 	public static Estacion e1;
 	public static Estacion e2;
 	public static Linea l1;
@@ -31,6 +32,7 @@ class RedMetroBlackBoxTest {
 		c2 = new CoordenadasGPS("040°42'46\"N", "074°00'20\"O");
 		c3 = new CoordenadasGPS("040°42'46\"N", "074°00'19\"O");
 		c4 = new CoordenadasGPS("040°42'46\"N", "074°00'18\"O");
+		c5 = new CoordenadasGPS("000°42'46\"N", "000°00'18\"O");
 		e1 = new Estacion("estacion1", c1, c2);
 		e2 = new Estacion("estacion2", c3, c4);
 		l1 = new Linea(1, "rojo", e1, e2);
@@ -93,5 +95,12 @@ class RedMetroBlackBoxTest {
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.getLineasConexionConTransbordo("estacion3", "estacion1");
 		});
+	}
+	
+	@Test
+	public void testGetEstacionesCercanas0Estaciones() {
+		RedMetro red = new RedMetro(l1, l2);
+		Estacion estaciones[] = {};
+		assertArrayEquals(red.getEstacionesCercanas(c5, 1), estaciones);
 	}
 }
