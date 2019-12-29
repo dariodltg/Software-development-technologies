@@ -2,12 +2,6 @@ package es.uva.inf.tds.pr4;
 
 import java.util.ArrayList;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonBuilderFactory;
-import javax.json.JsonObject;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +45,13 @@ public class RedMetro {
 				throw new IllegalArgumentException("Los número de las líneas deben ser consecutivos.");
 			}
 		}
+		for (int j = 0; j < this.lineas.size(); j++) {
+			for (int k = 0; k < this.lineas.size(); k++) {
+				if (j != k && this.lineas.get(j).getColor().equals(this.lineas.get(k).getColor())) {
+					throw new IllegalArgumentException("No puede haber lineas con colores repetidos");
+				}
+			}
+		}
 	}
 
 	/**
@@ -59,9 +60,52 @@ public class RedMetro {
 	 * 
 	 * @param red
 	 *            String en formato json que representa la red.
+	 * @throws JSONException
+	 *             Si la cadena no cumple la sintaxis JSON.
+	 * @throws IllegalArgumentException
+	 *             Si la red no tiene al menos 2 líneas o si los números de las
+	 *             líneas no son consecutivos o si hay líneas con colores repetidos.
 	 */
-	public RedMetro(String red) {
-		// TODO Auto-generated constructor stub
+	public RedMetro(String red) throws JSONException {
+		JSONArray array = new JSONArray(red);
+		lineas = new ArrayList<>();
+		for (int i = 0; i < array.length(); i++) {
+			JSONObject lineaJSON = array.getJSONObject(i);
+			JSONArray estacionesJSON = lineaJSON.getJSONArray("estaciones");
+			ArrayList<Estacion> estaciones = new ArrayList<>();
+			for (int j = 0; j < estacionesJSON.length(); j++) {
+				JSONObject estacionJSON = estacionesJSON.getJSONObject(j);
+				JSONArray coordenadasJSON = estacionJSON.getJSONArray("coordenadasGPS");
+				ArrayList<CoordenadasGPS> coordenadas = new ArrayList<>();
+				for (int k = 0; k < coordenadasJSON.length(); k++) {
+					JSONObject coordenadaJSON = coordenadasJSON.getJSONObject(k);
+					CoordenadasGPS coordenada = new CoordenadasGPS(coordenadaJSON.getString("latitud"),
+							coordenadaJSON.getString("longitud"));
+					coordenadas.add(coordenada);
+				}
+				Estacion estacion = new Estacion(estacionJSON.getString("nombre"),
+						coordenadas.toArray(new CoordenadasGPS[coordenadas.size()]));
+				estaciones.add(estacion);
+			}
+			Linea linea = new Linea(lineaJSON.getInt("numero"), lineaJSON.getString("color"),
+					estaciones.toArray(new Estacion[estaciones.size()]));
+			lineas.add(linea);
+		}
+		if (lineas.size() < 2) {
+			throw new IllegalArgumentException("La red debe tener al menos 2 líneas");
+		}
+		for (int i = 0; i < lineas.size(); i++) {
+			if (lineas.get(i).getNumero() != i + 1) {
+				throw new IllegalArgumentException("Los número de las líneas deben ser consecutivos.");
+			}
+		}
+		for (int j = 0; j < lineas.size(); j++) {
+			for (int k = 0; k < lineas.size(); k++) {
+				if (j != k && lineas.get(j).getColor().equals(lineas.get(k).getColor())) {
+					throw new IllegalArgumentException("No puede haber lineas con colores repetidos");
+				}
+			}
+		}
 	}
 
 	/**
@@ -380,23 +424,25 @@ public class RedMetro {
 		JSONArray listaLineas = new JSONArray();
 		for (int i = 0; i < getLineas().length; i++) {
 			JSONObject linea = new JSONObject();
-			linea.put("numero","\""+getLineas()[i].getNumero()+"\"");
-			linea.put("color","\""+getLineas()[i].getColor()+"\"");
+			linea.put("numero", "\"" + getLineas()[i].getNumero() + "\"");
+			linea.put("color", "\"" + getLineas()[i].getColor() + "\"");
 			JSONArray listaEstaciones = new JSONArray();
-			for(int j=0;j< getLineas()[i].getEstaciones(true).length;j++) {
+			for (int j = 0; j < getLineas()[i].getEstaciones(true).length; j++) {
 				JSONObject estacion = new JSONObject();
-				estacion.put("nombre", "\""+getLineas()[i].getEstaciones(true)[i].getNombre()+"\"");
-				JSONArray listaCoordenadas=new JSONArray();
-				for(int k=0;k<getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS().length;k++) {
+				estacion.put("nombre", "\"" + getLineas()[i].getEstaciones(true)[i].getNombre() + "\"");
+				JSONArray listaCoordenadas = new JSONArray();
+				for (int k = 0; k < getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS().length; k++) {
 					JSONObject coordenadasGPS = new JSONObject();
-					coordenadasGPS.put("latitud",getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS()[k].getLatitudGMS());
-					coordenadasGPS.put("latitud",getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS()[k].getLongitudGMS());
+					coordenadasGPS.put("latitud",
+							getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS()[k].getLatitudGMS());
+					coordenadasGPS.put("latitud",
+							getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS()[k].getLongitudGMS());
 					listaCoordenadas.put(coordenadasGPS);
 				}
 				estacion.put("coordenadasGPS", listaCoordenadas);
 				listaEstaciones.put(estacion);
 			}
-			linea.put("estaciones",listaEstaciones);
+			linea.put("estaciones", listaEstaciones);
 			listaLineas.put(linea);
 		}
 		return listaLineas.toString();
