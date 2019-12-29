@@ -1,5 +1,8 @@
 package es.uva.inf.tds.pr4;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
 import es.uva.inf.tds.redmetro.Linea;
@@ -13,6 +16,8 @@ import es.uva.inf.tds.redmetro.Linea;
  */
 public class RedMetro {
 
+	private ArrayList<Linea> lineas;
+
 	/**
 	 * Constructor de una red de líneas de metro.
 	 * 
@@ -23,11 +28,22 @@ public class RedMetro {
 	 *             líneas no son consecutivos o si hay líneas con colores repetidos.
 	 */
 	public RedMetro(Linea... lineas) {
-		// TODO Auto-generated constructor stub
+		if (lineas.length < 2) {
+			throw new IllegalArgumentException("La red debe tener al menos 2 líneas");
+		}
+		for (Linea linea : lineas) {
+			this.lineas.add(linea);
+		}
+		for (int i = 0; i < this.lineas.size(); i++) {
+			if (this.lineas.get(i).getNumero() != i + 1) {
+				throw new IllegalArgumentException("Los número de las líneas deben ser consecutivos.");
+			}
+		}
 	}
 
 	/**
-	 * Constructor de una red de líneas de metro a partir de un String en formato json
+	 * Constructor de una red de líneas de metro a partir de un String en formato
+	 * json
 	 * 
 	 * @param red
 	 *            String en formato json que representa la red.
@@ -45,8 +61,13 @@ public class RedMetro {
 	 *         línea con ese número.
 	 */
 	public Linea getLineaNumero(int numero) {
-		// TODO Auto-generated method stub
-		return null;
+		Linea lineaBuscada = null;
+		for (int i = 0; i < lineas.size(); i++) {
+			if (lineas.get(i).getNumero() == numero) {
+				lineaBuscada = lineas.get(i);
+			}
+		}
+		return lineaBuscada;
 	}
 
 	/**
@@ -58,8 +79,13 @@ public class RedMetro {
 	 *         línea con ese color.
 	 */
 	public Linea getLineaColor(String color) {
-		// TODO Auto-generated method stub
-		return null;
+		Linea lineaBuscada = null;
+		for (int i = 0; i < lineas.size(); i++) {
+			if (lineas.get(i).getColor().equals(color)) {
+				lineaBuscada = lineas.get(i);
+			}
+		}
+		return lineaBuscada;
 	}
 
 	/**
@@ -73,8 +99,15 @@ public class RedMetro {
 	 *             repetido.
 	 */
 	public void addLinea(Linea linea) {
-		// TODO Auto-generated method stub
-
+		for (int i = 0; i < lineas.size(); i++) {
+			if (linea.getColor().equals(lineas.get(i).getColor())) {
+				throw new IllegalArgumentException("El color no se puede repetir");
+			}
+		}
+		if(linea.getNumero()!=lineas.get(lineas.size()-1).getNumero()+1) {
+			throw new IllegalArgumentException("Los número de las líneas deben ser consecutivos");
+		}
+		lineas.add(linea);
 	}
 
 	/**
