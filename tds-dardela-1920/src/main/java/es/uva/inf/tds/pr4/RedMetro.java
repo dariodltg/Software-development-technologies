@@ -1,6 +1,17 @@
 package es.uva.inf.tds.pr4;
 
 import java.util.ArrayList;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonBuilderFactory;
+import javax.json.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
 import es.uva.inf.tds.redmetro.Linea;
@@ -362,10 +373,33 @@ public class RedMetro {
 	/**
 	 * Devuelve un String en formato JSON que contiene información sobre todas las
 	 * líneas de la red.
+	 * 
+	 * @throws JSONException
 	 */
-	public String getJSON() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getJSON() throws JSONException {
+		JSONArray listaLineas = new JSONArray();
+		for (int i = 0; i < getLineas().length; i++) {
+			JSONObject linea = new JSONObject();
+			linea.put("numero","\""+getLineas()[i].getNumero()+"\"");
+			linea.put("color","\""+getLineas()[i].getColor()+"\"");
+			JSONArray listaEstaciones = new JSONArray();
+			for(int j=0;j< getLineas()[i].getEstaciones(true).length;j++) {
+				JSONObject estacion = new JSONObject();
+				estacion.put("nombre", "\""+getLineas()[i].getEstaciones(true)[i].getNombre()+"\"");
+				JSONArray listaCoordenadas=new JSONArray();
+				for(int k=0;k<getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS().length;k++) {
+					JSONObject coordenadasGPS = new JSONObject();
+					coordenadasGPS.put("latitud",getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS()[k].getLatitudGMS());
+					coordenadasGPS.put("latitud",getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS()[k].getLongitudGMS());
+					listaCoordenadas.put(coordenadasGPS);
+				}
+				estacion.put("coordenadasGPS", listaCoordenadas);
+				listaEstaciones.put(estacion);
+			}
+			linea.put("estaciones",listaEstaciones);
+			listaLineas.put(linea);
+		}
+		return listaLineas.toString();
 	}
 
 }
