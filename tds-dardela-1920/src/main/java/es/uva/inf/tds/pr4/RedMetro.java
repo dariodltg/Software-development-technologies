@@ -1,8 +1,6 @@
 package es.uva.inf.tds.pr4;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
 import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
 import es.uva.inf.tds.redmetro.Linea;
@@ -32,6 +30,8 @@ public class RedMetro {
 		if (lineas.length < 2) {
 			throw new IllegalArgumentException("La red debe tener al menos 2 líneas");
 		}
+		this.lineas=new ArrayList<>();
+		fueraDeServicio=new ArrayList<>();
 		for (Linea linea : lineas) {
 			this.lineas.add(linea);
 		}
@@ -63,9 +63,9 @@ public class RedMetro {
 	 */
 	public Linea getLineaNumero(int numero) {
 		Linea lineaBuscada = null;
-		for (int i = 0; i < lineas.size(); i++) {
-			if (lineas.get(i).getNumero() == numero) {
-				lineaBuscada = lineas.get(i);
+		for (int i = 0; i < getLineas().length; i++) {
+			if (getLineas()[i].getNumero() == numero) {
+				lineaBuscada = getLineas()[i];
 			}
 		}
 		return lineaBuscada;
@@ -81,9 +81,9 @@ public class RedMetro {
 	 */
 	public Linea getLineaColor(String color) {
 		Linea lineaBuscada = null;
-		for (int i = 0; i < lineas.size(); i++) {
-			if (lineas.get(i).getColor().equals(color)) {
-				lineaBuscada = lineas.get(i);
+		for (int i = 0; i < getLineas().length; i++) {
+			if (getLineas()[i].getColor().equals(color)) {
+				lineaBuscada = getLineas()[i];
 			}
 		}
 		return lineaBuscada;
@@ -100,12 +100,12 @@ public class RedMetro {
 	 *             repetido.
 	 */
 	public void addLinea(Linea linea) {
-		for (int i = 0; i < lineas.size(); i++) {
-			if (linea.getColor().equals(lineas.get(i).getColor())) {
+		for (int i = 0; i < getLineas().length; i++) {
+			if (linea.getColor().equals(getLineas()[i].getColor())) {
 				throw new IllegalArgumentException("El color no se puede repetir");
 			}
 		}
-		if(linea.getNumero()!=lineas.get(lineas.size()-1).getNumero()+1) {
+		if (linea.getNumero() != getLineas()[lineas.size() - 1].getNumero() + 1) {
 			throw new IllegalArgumentException("Los número de las líneas deben ser consecutivos");
 		}
 		lineas.add(linea);
@@ -121,17 +121,18 @@ public class RedMetro {
 	 *             dejara a la red con menos de 2 líneas.
 	 */
 	public void removeLinea(int numero) {
-		if(lineas.size()-fueraDeServicio.size()==2) {
+		if (getLineas().length - fueraDeServicio.size() == 2) {
 			throw new IllegalArgumentException("Debe haber al menos 2 líneas en servicio");
 		}
-		boolean encontrado=false;
-		for(int i=0;i<lineas.size();i++) {
-			if(lineas.get(i).getNumero()==numero) {
-				encontrado=true;
-				fueraDeServicio.add(lineas.get(i));
+		boolean encontrado = false;
+		for (int i = 0; i < getLineas().length; i++) {
+			if (getLineas()[i].getNumero() == numero) {
+				encontrado = true;
+				fueraDeServicio.add(getLineas()[i]);
+				break;
 			}
 		}
-		if(!encontrado) {
+		if (!encontrado) {
 			throw new IllegalArgumentException("El número no corresponde a ninguna línea");
 		}
 	}
@@ -142,7 +143,7 @@ public class RedMetro {
 	 * @return Un array con todas las líneas que forman la red.
 	 */
 	public Linea[] getLineas() {
-		return (Linea[]) lineas.toArray();
+		return lineas.toArray(new Linea[lineas.size()]);
 	}
 
 	/**
@@ -158,8 +159,39 @@ public class RedMetro {
 	 *             ninguna estación de la red.
 	 */
 	public Linea[] getLineasEstacion(String nombreEstacion) {
-		// TODO Auto-generated method stub
-		return null;
+		Estacion estacionBuscada=null;
+		boolean encontrado=false;
+		ArrayList<Linea> lineasEstacion=new ArrayList<>();
+		for (int i = 0; i < getLineas().length; i++) {
+			Estacion [] estacionesIda = getLineas()[i].getEstaciones(true);
+			for (int j=0;j<estacionesIda.length;j++) {
+				if(estacionesIda[j].getNombre().equals(nombreEstacion)) {
+					encontrado=true;
+					estacionBuscada=estacionesIda[j];
+					break;
+				}
+			}
+			if(encontrado) {
+				break;
+			}
+			Estacion [] estacionesVuelta = getLineas()[i].getEstaciones(true);
+			for (int j=0;j<estacionesVuelta.length;j++) {
+				if(estacionesVuelta[j].getNombre().equals(nombreEstacion)) {
+					encontrado=true;
+					estacionBuscada=estacionesIda[j];
+					break;
+				}
+			}
+			if(encontrado) {
+				break;
+			}
+		}
+		for (int i=0;i<getLineas().length;i++) {
+			if(getLineas()[i].contieneEstacion(estacionBuscada)) {
+				lineasEstacion.add(getLineas()[i]);
+			}
+		}
+		return lineasEstacion.toArray(new Linea[lineasEstacion.size()]) ;
 	}
 
 	/**
