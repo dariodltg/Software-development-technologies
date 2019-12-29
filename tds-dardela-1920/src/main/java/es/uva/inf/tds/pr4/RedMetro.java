@@ -30,8 +30,8 @@ public class RedMetro {
 		if (lineas.length < 2) {
 			throw new IllegalArgumentException("La red debe tener al menos 2 líneas");
 		}
-		this.lineas=new ArrayList<>();
-		fueraDeServicio=new ArrayList<>();
+		this.lineas = new ArrayList<>();
+		fueraDeServicio = new ArrayList<>();
 		for (Linea linea : lineas) {
 			this.lineas.add(linea);
 		}
@@ -159,39 +159,31 @@ public class RedMetro {
 	 *             ninguna estación de la red.
 	 */
 	public Linea[] getLineasEstacion(String nombreEstacion) {
-		Estacion estacionBuscada=null;
-		boolean encontrado=false;
-		ArrayList<Linea> lineasEstacion=new ArrayList<>();
+		Estacion estacionBuscada = null;
+		boolean encontrado = false;
+		ArrayList<Linea> lineasEstacion = new ArrayList<>();
 		for (int i = 0; i < getLineas().length; i++) {
-			Estacion [] estacionesIda = getLineas()[i].getEstaciones(true);
-			for (int j=0;j<estacionesIda.length;j++) {
-				if(estacionesIda[j].getNombre().equals(nombreEstacion)) {
-					encontrado=true;
-					estacionBuscada=estacionesIda[j];
+			Estacion[] estaciones = getLineas()[i].getEstaciones(true);
+			for (int j = 0; j < estaciones.length; j++) {
+				if (estaciones[j].getNombre().equals(nombreEstacion)) {
+					encontrado = true;
+					estacionBuscada = estaciones[j];
 					break;
 				}
 			}
-			if(encontrado) {
-				break;
-			}
-			Estacion [] estacionesVuelta = getLineas()[i].getEstaciones(true);
-			for (int j=0;j<estacionesVuelta.length;j++) {
-				if(estacionesVuelta[j].getNombre().equals(nombreEstacion)) {
-					encontrado=true;
-					estacionBuscada=estacionesIda[j];
-					break;
-				}
-			}
-			if(encontrado) {
+			if (encontrado) {
 				break;
 			}
 		}
-		for (int i=0;i<getLineas().length;i++) {
-			if(getLineas()[i].contieneEstacion(estacionBuscada)) {
+		if(!encontrado) {
+			throw new IllegalArgumentException("El nombre no corresponde con ninguna estación");
+		}
+		for (int i = 0; i < getLineas().length; i++) {
+			if (getLineas()[i].contieneEstacion(estacionBuscada)) {
 				lineasEstacion.add(getLineas()[i]);
 			}
 		}
-		return lineasEstacion.toArray(new Linea[lineasEstacion.size()]) ;
+		return lineasEstacion.toArray(new Linea[lineasEstacion.size()]);
 	}
 
 	/**
@@ -210,8 +202,19 @@ public class RedMetro {
 	 *             con ninguna de las líneas de la red.
 	 */
 	public Estacion[] getEstacionesCorrespondencia(int numL1, int numL2) {
-		// TODO Auto-generated method stub
-		return null;
+		Linea l1;
+		Linea l2;
+		try {
+			l1 = getLineaNumero(numL1);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("El número 1 no corresponde a ninguna línea.");
+		}
+		try {
+			l2 = getLineaNumero(numL2);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("El número 2 no corresponde a ninguna línea.");
+		}
+		return l1.getCorrespondencias(l2);
 	}
 
 	/**
@@ -230,8 +233,32 @@ public class RedMetro {
 	 *             ninguna estación de la red.
 	 */
 	public Linea[] getLineasConexionSinTransbordo(String nombreEstacion1, String nombreEstacion2) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Linea> lineasConexionSinTransbordo = new ArrayList<>();
+		Linea [] lineasEstacion1;
+		Linea [] lineasEstacion2;
+		try {
+			lineasEstacion1=getLineasEstacion(nombreEstacion1);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("El nombre 1 no corresponde a ninguna estación.");
+		}
+		try {
+			lineasEstacion2=getLineasEstacion(nombreEstacion2);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("El nombre 2 no corresponde a ninguna estación.");
+		}
+		if(lineasEstacion1.length<lineasEstacion2.length) {
+			Linea [] aux=lineasEstacion1;
+			lineasEstacion1=lineasEstacion2;
+			lineasEstacion2=aux;
+		}
+		for(int i=0;i<lineasEstacion1.length;i++) {
+			for(int j=0;j<lineasEstacion2.length;j++) {
+				if(lineasEstacion1[i]==lineasEstacion2[j]) {
+					lineasConexionSinTransbordo.add(lineasEstacion1[i]);
+				}
+			}
+		}
+		return lineasConexionSinTransbordo.toArray(new Linea[lineasConexionSinTransbordo.size()]);
 	}
 
 	/**
