@@ -17,6 +17,7 @@ import es.uva.inf.tds.redmetro.Linea;
 public class RedMetro {
 
 	private ArrayList<Linea> lineas;
+	private ArrayList<Linea> fueraDeServicio;
 
 	/**
 	 * Constructor de una red de líneas de metro.
@@ -111,17 +112,28 @@ public class RedMetro {
 	}
 
 	/**
-	 * Elimina una línea de la red dado su número.
+	 * Retira una línea del servicio de la red dado su número.
 	 * 
 	 * @param numero
-	 *            Número de la línea que se quiere eliminar.
+	 *            Número de la línea que se quiere retirar.
 	 * @throws IllegalArgumentException
 	 *             si el número no corresponde a ninguna línea o si al quitarlo
 	 *             dejara a la red con menos de 2 líneas.
 	 */
 	public void removeLinea(int numero) {
-		// TODO Auto-generated method stub
-
+		if(lineas.size()-fueraDeServicio.size()==2) {
+			throw new IllegalArgumentException("Debe haber al menos 2 líneas en servicio");
+		}
+		boolean encontrado=false;
+		for(int i=0;i<lineas.size();i++) {
+			if(lineas.get(i).getNumero()==numero) {
+				encontrado=true;
+				fueraDeServicio.add(lineas.get(i));
+			}
+		}
+		if(!encontrado) {
+			throw new IllegalArgumentException("El número no corresponde a ninguna línea");
+		}
 	}
 
 	/**
@@ -130,8 +142,7 @@ public class RedMetro {
 	 * @return Un array con todas las líneas que forman la red.
 	 */
 	public Linea[] getLineas() {
-		// TODO Auto-generated method stub
-		return null;
+		return (Linea[]) lineas.toArray();
 	}
 
 	/**
