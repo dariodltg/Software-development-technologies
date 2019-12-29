@@ -297,14 +297,16 @@ public class RedMetro {
 			lineasEstacion1 = lineasEstacion2;
 			lineasEstacion2 = aux;
 		}
-		for(int i=0;i<lineasEstacion1.length;i++) {
-			Estacion [] estaciones1= lineasEstacion1[i].getEstaciones(true);
-			for(int j=0;j<estaciones1.length;j++) {
-				for(int k=0;k<lineasEstacion2.length;k++) {
-					if(lineasEstacion2[k].contieneEstacion(estaciones1[j])) {
-						lineasConexionConTransbordo.add(lineasEstacion1[i]);
-						lineasConexionConTransbordo.add(lineasEstacion2[k]);
-						return lineasConexionConTransbordo.toArray(new Linea[lineasConexionConTransbordo.size()]);
+		for (int i = 0; i < lineasEstacion1.length; i++) {
+			Estacion[] estaciones1 = lineasEstacion1[i].getEstaciones(true);
+			for (int j = 0; j < estaciones1.length; j++) {
+				if (!estaciones1[j].getNombre().equals(nombreEstacion1)) {
+					for (int k = 0; k < lineasEstacion2.length; k++) {
+						if (lineasEstacion2[k].contieneEstacion(estaciones1[j])) {
+							lineasConexionConTransbordo.add(lineasEstacion1[i]);
+							lineasConexionConTransbordo.add(lineasEstacion2[k]);
+							return lineasConexionConTransbordo.toArray(new Linea[lineasConexionConTransbordo.size()]);
+						}
 					}
 				}
 			}
@@ -316,7 +318,7 @@ public class RedMetro {
 	 * Devuelve un array con las estaciones de la red que se encuentran a una
 	 * distancia máxima dada desde las coordenadas dadas.
 	 * 
-	 * @param coordenadaGPS
+	 * @param coordenadasGPS
 	 *            CoordenadasGPS que se toman como punto de referencia.
 	 * @param distanciaMaxima
 	 *            Distancia máxima (en kilómetros) para establecer la cercanía.
@@ -324,9 +326,37 @@ public class RedMetro {
 	 *         distancia máxima dada desde las coordenadas dadas. Si no hay
 	 *         estaciones cercanas, devuelve un array de tamaño 0.
 	 */
-	public Estacion[] getEstacionesCercanas(CoordenadasGPS coordenadaGPS, int distanciaMaxima) {
-		// TODO Auto-generated method stub
-		return null;
+	public Estacion[] getEstacionesCercanas(CoordenadasGPS coordenadasGPS, int distanciaMaxima) {
+		ArrayList<Estacion> estacionesCercanas = new ArrayList<>();
+		Estacion[] estaciones = getEstacionesRed();
+		for (int i = 0; i < estaciones.length; i++) {
+			CoordenadasGPS[] entradas = estaciones[i].getCoordenadasGPS();
+			for (int j = 0; j < entradas.length; j++) {
+				if (coordenadasGPS.getDistanciaA(entradas[j]) < distanciaMaxima) {
+					estacionesCercanas.add(estaciones[i]);
+					break;
+				}
+			}
+		}
+		return estacionesCercanas.toArray(new Estacion[estacionesCercanas.size()]);
+	}
+
+	/**
+	 * Devuelve todas las estaciones que hay en la red.
+	 * 
+	 * @return Un array con todas las estaciones que hay en la red.
+	 */
+	private Estacion[] getEstacionesRed() {
+		ArrayList<Estacion> estaciones = new ArrayList<>();
+		for (int i = 0; i < getLineas().length; i++) {
+			Estacion[] estacionesLinea = getLineas()[i].getEstaciones(true);
+			for (int j = 0; j < estacionesLinea.length; j++) {
+				if (estaciones.contains(estacionesLinea[j])) {
+					estaciones.add(estacionesLinea[j]);
+				}
+			}
+		}
+		return estaciones.toArray(new Estacion[estaciones.size()]);
 	}
 
 	/**
