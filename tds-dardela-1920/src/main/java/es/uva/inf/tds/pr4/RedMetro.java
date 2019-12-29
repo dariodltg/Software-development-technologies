@@ -175,7 +175,7 @@ public class RedMetro {
 				break;
 			}
 		}
-		if(!encontrado) {
+		if (!encontrado) {
 			throw new IllegalArgumentException("El nombre no corresponde con ninguna estación");
 		}
 		for (int i = 0; i < getLineas().length; i++) {
@@ -234,26 +234,26 @@ public class RedMetro {
 	 */
 	public Linea[] getLineasConexionSinTransbordo(String nombreEstacion1, String nombreEstacion2) {
 		ArrayList<Linea> lineasConexionSinTransbordo = new ArrayList<>();
-		Linea [] lineasEstacion1;
-		Linea [] lineasEstacion2;
+		Linea[] lineasEstacion1;
+		Linea[] lineasEstacion2;
 		try {
-			lineasEstacion1=getLineasEstacion(nombreEstacion1);
+			lineasEstacion1 = getLineasEstacion(nombreEstacion1);
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("El nombre 1 no corresponde a ninguna estación.");
 		}
 		try {
-			lineasEstacion2=getLineasEstacion(nombreEstacion2);
+			lineasEstacion2 = getLineasEstacion(nombreEstacion2);
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("El nombre 2 no corresponde a ninguna estación.");
 		}
-		if(lineasEstacion1.length<lineasEstacion2.length) {
-			Linea [] aux=lineasEstacion1;
-			lineasEstacion1=lineasEstacion2;
-			lineasEstacion2=aux;
+		if (lineasEstacion1.length < lineasEstacion2.length) {
+			Linea[] aux = lineasEstacion1;
+			lineasEstacion1 = lineasEstacion2;
+			lineasEstacion2 = aux;
 		}
-		for(int i=0;i<lineasEstacion1.length;i++) {
-			for(int j=0;j<lineasEstacion2.length;j++) {
-				if(lineasEstacion1[i]==lineasEstacion2[j]) {
+		for (int i = 0; i < lineasEstacion1.length; i++) {
+			for (int j = 0; j < lineasEstacion2.length; j++) {
+				if (lineasEstacion1[i] == lineasEstacion2[j]) {
 					lineasConexionSinTransbordo.add(lineasEstacion1[i]);
 				}
 			}
@@ -279,8 +279,37 @@ public class RedMetro {
 	 *             ninguna estación de la red.
 	 */
 	public Linea[] getLineasConexionConTransbordo(String nombreEstacion1, String nombreEstacion2) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Linea> lineasConexionConTransbordo = new ArrayList<>();
+		Linea[] lineasEstacion1;
+		Linea[] lineasEstacion2;
+		try {
+			lineasEstacion1 = getLineasEstacion(nombreEstacion1);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("El nombre 1 no corresponde a ninguna estación.");
+		}
+		try {
+			lineasEstacion2 = getLineasEstacion(nombreEstacion2);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("El nombre 2 no corresponde a ninguna estación.");
+		}
+		if (lineasEstacion1.length < lineasEstacion2.length) {
+			Linea[] aux = lineasEstacion1;
+			lineasEstacion1 = lineasEstacion2;
+			lineasEstacion2 = aux;
+		}
+		for(int i=0;i<lineasEstacion1.length;i++) {
+			Estacion [] estaciones1= lineasEstacion1[i].getEstaciones(true);
+			for(int j=0;j<estaciones1.length;j++) {
+				for(int k=0;k<lineasEstacion2.length;k++) {
+					if(lineasEstacion2[k].contieneEstacion(estaciones1[j])) {
+						lineasConexionConTransbordo.add(lineasEstacion1[i]);
+						lineasConexionConTransbordo.add(lineasEstacion2[k]);
+						return lineasConexionConTransbordo.toArray(new Linea[lineasConexionConTransbordo.size()]);
+					}
+				}
+			}
+		}
+		return new Linea[0];
 	}
 
 	/**
