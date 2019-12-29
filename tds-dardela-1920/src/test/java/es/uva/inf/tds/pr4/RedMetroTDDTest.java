@@ -244,7 +244,13 @@ class RedMetroTDDTest {
 
 	@Test
 	public void testConstructorFromJSON() {
-		RedMetro red1 = new RedMetro(json);
+		RedMetro red1=null;
+		try {
+			red1 = new RedMetro(json);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		RedMetro red2 = new RedMetro(l1, l2);
 		assertNotNull(red1.getLineas());
 		assertNotNull(red2.getLineas());
