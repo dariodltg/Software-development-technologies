@@ -21,7 +21,8 @@ public class RedMetro {
 
 	private ArrayList<Linea> lineas;
 	private ArrayList<Linea> fueraDeServicio;
-
+	private ArrayList<Linea> lineasTotales;
+ 
 	/**
 	 * Constructor de una red de líneas de metro.
 	 * 
@@ -37,8 +38,10 @@ public class RedMetro {
 		}
 		this.lineas = new ArrayList<>();
 		fueraDeServicio = new ArrayList<>();
+		lineasTotales=new ArrayList<>();
 		for (Linea linea : lineas) {
 			this.lineas.add(linea);
+			lineasTotales.add(linea);
 		}
 		for (int i = 0; i < this.lineas.size(); i++) {
 			if (this.lineas.get(i).getNumero() != i + 1) {
@@ -90,6 +93,7 @@ public class RedMetro {
 			Linea linea = new Linea(lineaJSON.getInt("numero"), lineaJSON.getString("color"),
 					estaciones.toArray(new Estacion[estaciones.size()]));
 			lineas.add(linea);
+			lineasTotales.add(linea);
 		}
 		if (lineas.size() < 2) {
 			throw new IllegalArgumentException("La red debe tener al menos 2 líneas");
@@ -164,6 +168,7 @@ public class RedMetro {
 			throw new IllegalArgumentException("Los número de las líneas deben ser consecutivos");
 		}
 		lineas.add(linea);
+		lineasTotales.add(linea);
 	}
 
 	/**
@@ -184,6 +189,29 @@ public class RedMetro {
 			if (getLineas()[i].getNumero() == numero) {
 				encontrado = true;
 				fueraDeServicio.add(getLineas()[i]);
+				lineas.remove(getLineas()[i]);
+				break;
+			}
+		}
+		if (!encontrado) {
+			throw new IllegalArgumentException("El número no corresponde a ninguna línea");
+		}
+	}
+	
+	/**
+	 * Reactiva una línea del servicio de la red dado su número.
+	 * 
+	 * @param numero
+	 *            Número de la línea que se quiere reactivar.
+	 * @throws IllegalArgumentException
+	 *             si el número no corresponde a ninguna línea.
+	 */
+	public void reactivarLinea(int numero) {
+		boolean encontrado=false;
+		for (int i = 0; i < fueraDeServicio.size(); i++) {
+			if (getLineas()[i].getNumero() == numero) {
+				encontrado = true;
+				lineas.add(getLineasTotales()[i]);
 				break;
 			}
 		}
@@ -193,13 +221,32 @@ public class RedMetro {
 	}
 
 	/**
-	 * Devuelve un array con todas las líneas que forman la red.
+	 * Devuelve un array con todas las líneas en servicio que forman la red.
 	 * 
-	 * @return Un array con todas las líneas que forman la red.
+	 * @return Un array con todas las líneas en servicio que forman la red.
 	 */
 	public Linea[] getLineas() {
 		return lineas.toArray(new Linea[lineas.size()]);
 	}
+	
+	/**
+	 * Devuelve un array con todas las líneas que forman la red.
+	 * 
+	 * @return Un array con todas las líneas que forman la red.
+	 */
+	public Linea[] getLineasTotales() {
+		return lineasTotales.toArray(new Linea[lineasTotales.size()]);
+	}
+	
+	/**
+	 * Devuelve un array con todas las líneas fuera de servicio que forman la red.
+	 * 
+	 * @return Un array con todas las líneas fuera de servicio que forman la red.
+	 */
+	public Linea[] getLineasFueraDeServicio() {
+		return fueraDeServicio.toArray(new Linea[fueraDeServicio.size()]);
+	}
+	
 
 	/**
 	 * Devuelve un array con las líneas que pasan por una estación concreta.
