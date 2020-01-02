@@ -17,7 +17,7 @@ import es.uva.inf.tds.redmetro.Linea;
  *
  */
 @Tag("BlackBox")
-class RedMetroBlackBoxTest {
+class RedMetroTestBlackBox {
 	
 	public static CoordenadasGPS c1;
 	public static CoordenadasGPS c2;

@@ -28,7 +28,7 @@ import es.uva.inf.tds.redmetro.Linea;
  *
  */
 @Tag("TDD")
-class RedMetroTDDTest {
+class RedMetroTestTDD {
 
 	public static CoordenadasGPS c1;
 	public static CoordenadasGPS c2;
