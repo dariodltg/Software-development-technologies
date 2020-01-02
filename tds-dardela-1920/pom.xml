@@ -22,8 +22,8 @@
 			/src/main/java/es/uva/inf/maps/CoordenadasGPS.java,
 			/src/main/java/es/uva/inf/tds/redmetro/Estacion.java,
 			/src/main/java/es/uva/inf/tds/redmetro/Linea.java,
-			/src/test/java/es/uva/inf/tds/pr4/RedMetroTDDTest.java,
-			/src/test/java/es/uva/inf/tds/pr4/RedMetroBlackBoxTest.java
+			**/*/RedMetroTDDTest.java,
+			**/*/RedMetroBlackBoxTest.java
 		</sonar.exclusions>
 	</properties>
 	<profiles>
