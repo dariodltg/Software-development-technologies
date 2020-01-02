@@ -425,7 +425,7 @@ public class RedMetro {
 	 *         distancia máxima dada desde las coordenadas dadas. Si no hay
 	 *         estaciones cercanas, devuelve un array de tamaño 0.
 	 */
-	public Estacion[] getEstacionesCercanas(CoordenadasGPS coordenadasGPS, int distanciaMaxima) {
+	public Estacion[] getEstacionesCercanas(CoordenadasGPS coordenadasGPS, double distanciaMaxima) {
 		ArrayList<Estacion> estacionesCercanas = new ArrayList<>();
 		Estacion[] estaciones = getEstacionesRed();
 		for (int i = 0; i < estaciones.length; i++) {
@@ -450,7 +450,7 @@ public class RedMetro {
 		for (int i = 0; i < getLineas().length; i++) {
 			Estacion[] estacionesLinea = getLineas()[i].getEstaciones(true);
 			for (int j = 0; j < estacionesLinea.length; j++) {
-				if (estaciones.contains(estacionesLinea[j])) {
+				if (!estaciones.contains(estacionesLinea[j])) {
 					estaciones.add(estacionesLinea[j]);
 				}
 			}

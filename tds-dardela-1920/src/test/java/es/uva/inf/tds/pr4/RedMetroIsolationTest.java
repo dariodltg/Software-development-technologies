@@ -39,20 +39,28 @@ class RedMetroIsolationTest {
 	@BeforeEach
 	public void setUp() {
 		c1 = createMock(CoordenadasGPS.class);
-		expect(c1.getLatitudGMS()).andReturn("040°42'46\"N");
-		expect(c1.getLongitudGMS()).andReturn("074°00'21\"O");
+		expect(c1.getLatitudGMS()).andReturn("040°42'46\"N").anyTimes();
+		expect(c1.getLongitudGMS()).andReturn("074°00'21\"O").anyTimes();
 		c2 = createMock(CoordenadasGPS.class);
-		expect(c2.getLatitudGMS()).andReturn("040°42'46\"N");
-		expect(c2.getLongitudGMS()).andReturn("074°00'20\"O");
+		expect(c2.getLatitudGMS()).andReturn("040°42'46\"N").anyTimes();
+		expect(c2.getLongitudGMS()).andReturn("074°00'20\"O").anyTimes();
 		c3 = createMock(CoordenadasGPS.class);
-		expect(c3.getLatitudGMS()).andReturn("040°42'46\"N");
-		expect(c3.getLongitudGMS()).andReturn("074°00'19\"O");
+		expect(c3.getLatitudGMS()).andReturn("040°42'46\"N").anyTimes();
+		expect(c3.getLongitudGMS()).andReturn("074°00'19\"O").anyTimes();
 		c4 = createMock(CoordenadasGPS.class);
-		expect(c4.getLatitudGMS()).andReturn("040°42'46\"N");
-		expect(c4.getLongitudGMS()).andReturn("074°00'18\"O");
+		expect(c4.getLatitudGMS()).andReturn("040°42'46\"N").anyTimes();
+		expect(c4.getLongitudGMS()).andReturn("074°00'18\"O").anyTimes();
 		c5 = createMock(CoordenadasGPS.class);
-		expect(c5.getLatitudGMS()).andReturn("040°42'46\"N");
-		expect(c5.getLongitudGMS()).andReturn("074°00'18\"O");
+		expect(c5.getLatitudGMS()).andReturn("040°42'46\"N").anyTimes();
+		expect(c5.getLongitudGMS()).andReturn("074°00'18\"O").anyTimes();
+		expect(c5.getDistanciaA(c1)).andReturn(2.0).anyTimes();
+		expect(c5.getDistanciaA(c2)).andReturn(2.0).anyTimes();
+		expect(c5.getDistanciaA(c3)).andReturn(2.0).anyTimes();
+		expect(c5.getDistanciaA(c4)).andReturn(2.0).anyTimes();
+		expect(c1.getDistanciaA(c1)).andReturn(0.0).anyTimes();
+		expect(c1.getDistanciaA(c2)).andReturn(2.0).anyTimes();
+		expect(c1.getDistanciaA(c3)).andReturn(2.0).anyTimes();
+		expect(c1.getDistanciaA(c4)).andReturn(2.0).anyTimes();
 		e1 = createMock(Estacion.class);
 		expect(e1.getNombre()).andReturn("estacion1").anyTimes();
 		CoordenadasGPS[] coords1 = new CoordenadasGPS[2];
@@ -139,21 +147,21 @@ class RedMetroIsolationTest {
 			new RedMetro(l1);
 		});
 	}
-	
+
 	@Test
 	public void testConstructorNoValidoNumerosNoConsecutivos() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new RedMetro(l1,l3);
+			new RedMetro(l1, l3);
 		});
 	}
-	
+
 	@Test
 	public void testConstructorNoValidoColoresRepetidos() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new RedMetro(l1,l3);
+			new RedMetro(l1, l3);
 		});
 	}
-	
+
 	@Test
 	public void testGetLineaNumero() {
 		RedMetro red = new RedMetro(l1, l2);
@@ -161,7 +169,7 @@ class RedMetroIsolationTest {
 		assertNotNull(l2);
 		assertEquals(red.getLineaNumero(1), l1);
 	}
-	
+
 	@Test
 	public void testGetLineaColor() {
 		RedMetro red = new RedMetro(l1, l2);
@@ -178,7 +186,7 @@ class RedMetroIsolationTest {
 		red.addLinea(l3);
 		assertEquals(red.getLineaColor("amarillo"), l3);
 	}
-	
+
 	@Test
 	public void testAddLineaNoValidoColorRepetido() {
 		RedMetro red = new RedMetro(l1, l2);
@@ -186,7 +194,7 @@ class RedMetroIsolationTest {
 			red.addLinea(l4);
 		});
 	}
-	
+
 	@Test
 	public void testAddLineaNoValidoNumeroNoConsecutivo() {
 		RedMetro red = new RedMetro(l1, l2);
@@ -194,7 +202,7 @@ class RedMetroIsolationTest {
 			red.addLinea(l5);
 		});
 	}
-	
+
 	@Test
 	public void testRemoveLinea() {
 		RedMetro red = new RedMetro(l1, l2);
@@ -213,7 +221,7 @@ class RedMetroIsolationTest {
 			red.removeLinea(3);
 		});
 	}
-	
+
 	@Test
 	public void testRemoveLinea2LineasRestantes() {
 		RedMetro red = new RedMetro(l1, l2);
@@ -221,14 +229,14 @@ class RedMetroIsolationTest {
 			red.removeLinea(2);
 		});
 	}
-	
+
 	@Test
 	public void testGetLineas() {
 		RedMetro red = new RedMetro(l1, l2);
 		Linea[] lineas = { l1, l2 };
 		assertArrayEquals(red.getLineas(), lineas);
 	}
-	
+
 	@Test
 	public void testGetLineasEstacion() {
 		RedMetro red = new RedMetro(l1, l2);
@@ -243,7 +251,7 @@ class RedMetroIsolationTest {
 			red.getLineasEstacion("estacion3");
 		});
 	}
-	
+
 	@Test
 	public void testGetEstacionesCorrespondencia() {
 		RedMetro red = new RedMetro(l1, l2);
@@ -258,12 +266,101 @@ class RedMetroIsolationTest {
 			red.getEstacionesCorrespondencia(1, 3);
 		});
 	}
-	
+
 	@Test
 	public void testGetEstacionesCorrespondenciaPrimerNúmeroInexistente() {
 		RedMetro red = new RedMetro(l1, l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			red.getEstacionesCorrespondencia(3, 1);
 		});
+	}
+
+	@Test
+	public void testGetLineasConexionSinTransbordo() {
+		RedMetro red = new RedMetro(l1, l2);
+		Linea[] lineas = { l1, l2 };
+		assertArrayEquals(red.getLineasConexionSinTransbordo("estacion1", "estacion2"), lineas);
+	}
+
+	@Test
+	public void testGetLineasConexionSinTransbordoNombreInexistente() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getLineasConexionSinTransbordo("estacion1", "estacion3");
+		});
+	}
+
+	@Test
+	public void testGetLineasConexionSinTransbordoPrimerNombreInexistente() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getLineasConexionSinTransbordo("estacion3", "estacion1");
+		});
+	}
+
+	@Test
+	public void testGetLineasConexionConTransbordo() {
+		Estacion e3 = createMock(Estacion.class);
+		expect(e3.getNombre()).andReturn("estacion3").anyTimes();
+		CoordenadasGPS[] coords3 = new CoordenadasGPS[2];
+		coords3[0] = c1;
+		coords3[1] = c2;
+		expect(e3.getCoordenadasGPS()).andReturn(coords3).anyTimes();
+		Linea l6 = createMock(Linea.class);
+		expect(l6.getColor()).andReturn("rojo").anyTimes();
+		expect(l6.getNumero()).andReturn(1).anyTimes();
+		Estacion[] estaciones6 = new Estacion[2];
+		estaciones6[0] = e1;
+		estaciones6[1] = e2;
+		expect(l6.getEstaciones(true)).andReturn(estaciones6).anyTimes();
+		expect(l6.contieneEstacion(e3)).andReturn(false).anyTimes();
+		expect(l6.contieneEstacion(e1)).andReturn(true).anyTimes();
+		expect(l6.contieneEstacion(e2)).andReturn(true).anyTimes();
+		Linea l7 = createMock(Linea.class);
+		expect(l7.getColor()).andReturn("azul").anyTimes();
+		expect(l7.getNumero()).andReturn(2).anyTimes();
+		Estacion[] estaciones7 = new Estacion[2];
+		estaciones7[0] = e2;
+		estaciones7[1] = e3;
+		expect(l7.getEstaciones(true)).andReturn(estaciones7).anyTimes();
+		expect(l7.contieneEstacion(e1)).andReturn(false).anyTimes();
+		expect(l7.contieneEstacion(e2)).andReturn(true).anyTimes();
+		expect(l7.contieneEstacion(e3)).andReturn(true).anyTimes();
+		replay(e3);
+		replay(l6);
+		replay(l7);
+		Linea[] lineas = { l6, l7 };
+		RedMetro red = new RedMetro(l6, l7);
+		assertArrayEquals(red.getLineasConexionConTransbordo("estacion1", "estacion3"), lineas);
+	}
+
+	@Test
+	public void testGetLineasConexionConTransbordoNombreInexistente() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getLineasConexionConTransbordo("estacion1", "estacion3");
+		});
+	}
+
+	@Test
+	public void testGetLineasConexionConTransbordoPrimerNombreInexistente() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getLineasConexionConTransbordo("estacion3", "estacion1");
+		});
+	}
+	
+	@Test
+	public void testGetEstacionesCercanas() {
+		RedMetro red = new RedMetro(l1, l2);
+		Estacion estaciones[] = { e1, e2 };
+		assertArrayEquals(red.getEstacionesCercanas(c1, 10.0), estaciones);
+	}
+	
+	@Test
+	public void testGetEstacionesCercanas0Estaciones() {
+		RedMetro red = new RedMetro(l1, l2);
+		Estacion estaciones[] = {};
+		assertArrayEquals(red.getEstacionesCercanas(c5, 1.0), estaciones);
 	}
 }
