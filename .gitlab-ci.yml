@@ -22,12 +22,6 @@ build_job:
     - cd tds-dardela-1920
     - mvn --batch-mode compile -Dmaven.test.skip=true -Djacoco.skip=true
 
-test_unit:
- stage: test
- script:
-   - cd tds-dardela-1920
-   - mvn test -P TDDyBlackBox
-   
 test_white_box:
  stage: test
  script:

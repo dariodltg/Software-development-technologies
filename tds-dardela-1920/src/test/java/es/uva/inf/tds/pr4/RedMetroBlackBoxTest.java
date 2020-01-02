@@ -10,6 +10,12 @@ import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
 import es.uva.inf.tds.redmetro.Linea;
 
+/**
+ * Clase de test de caja negra para la clase RedMetro
+ * 
+ * @author dardela
+ *
+ */
 @Tag("BlackBox")
 class RedMetroBlackBoxTest {
 	

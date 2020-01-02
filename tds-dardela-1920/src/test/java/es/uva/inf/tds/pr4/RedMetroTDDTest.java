@@ -236,8 +236,6 @@ class RedMetroTDDTest {
 		try {
 			JSONAssert.assertEquals(red.getJSON(), json, true);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 	}
@@ -248,8 +246,6 @@ class RedMetroTDDTest {
 		try {
 			red1 = new RedMetro(json);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		RedMetro red2 = new RedMetro(l1, l2);
 		assertNotNull(red1.getLineas());
