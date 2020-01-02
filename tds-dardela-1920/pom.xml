@@ -18,12 +18,16 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<junit.jupiter.version>5.5.2</junit.jupiter.version>
 		<junit.platform.version>1.5.2</junit.platform.version>
+		<sonar.host.url>https://sonarqube.inf.uva.es/</sonar.host.url>
+		<sonar.projectkey>tds-general-for-sonarlint</sonar.projectkey>
+		<sonar.login>2f9570d5a6f0ad7db07e8859ad29256a055e8902</sonar.login>
+		<sonar.password></sonar.password>
 		<sonar.exclusions>
 			/src/main/java/es/uva/inf/maps/CoordenadasGPS.java,
 			/src/main/java/es/uva/inf/tds/redmetro/Estacion.java,
 			/src/main/java/es/uva/inf/tds/redmetro/Linea.java,
-			**/*/RedMetroTDDTest.java,
-			**/*/RedMetroBlackBoxTest.java
+			/src/test/java/es/uva/inf/tds/pr4/RedMetroTDDTest.java,
+			/src/test/java/es/uva/inf/tds/pr4/RedMetroBlackBoxTest.java
 		</sonar.exclusions>
 	</properties>
 	<profiles>
