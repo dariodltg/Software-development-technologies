@@ -18,9 +18,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<junit.jupiter.version>5.5.2</junit.jupiter.version>
 		<junit.platform.version>1.5.2</junit.platform.version>
-		<sonar.coverage.exclusions>
-			/src/main/java/CoordenadasGPS.java, /src/main/java/Estacion.java, /src/main/java/.java
-		</sonar.coverage.exclusions>
+		<sonar.exclusions>
+			/src/main/java/CoordenadasGPS.java,
+			/src/main/java/Estacion.java, /src/main/java/Linea.java,
+			/src/test/java/RedMetroTDDTest.java,
+			/src/test/java/RedMetroBlackBoxTest.java
+		</sonar.exclusions>
 	</properties>
 	<profiles>
 		<profile>
