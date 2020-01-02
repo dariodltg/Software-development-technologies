@@ -72,6 +72,7 @@ public class RedMetro {
 	public RedMetro(String red) throws JSONException {
 		JSONArray array = new JSONArray(red);
 		lineas = new ArrayList<>();
+		lineasTotales= new ArrayList<>();
 		for (int i = 0; i < array.length(); i++) {
 			JSONObject lineaJSON = array.getJSONObject(i);
 			JSONArray estacionesJSON = lineaJSON.getJSONArray("estaciones");
@@ -468,18 +469,18 @@ public class RedMetro {
 		JSONArray listaLineas = new JSONArray();
 		for (int i = 0; i < getLineas().length; i++) {
 			JSONObject linea = new JSONObject();
-			linea.put("numero", "\"" + getLineas()[i].getNumero() + "\"");
-			linea.put("color", "\"" + getLineas()[i].getColor() + "\"");
+			linea.put("numero", getLineas()[i].getNumero());
+			linea.put("color", getLineas()[i].getColor());
 			JSONArray listaEstaciones = new JSONArray();
 			for (int j = 0; j < getLineas()[i].getEstaciones(true).length; j++) {
 				JSONObject estacion = new JSONObject();
-				estacion.put("nombre", "\"" + getLineas()[i].getEstaciones(true)[i].getNombre() + "\"");
+				estacion.put("nombre", getLineas()[i].getEstaciones(true)[j].getNombre());
 				JSONArray listaCoordenadas = new JSONArray();
 				for (int k = 0; k < getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS().length; k++) {
 					JSONObject coordenadasGPS = new JSONObject();
 					coordenadasGPS.put("latitud",
 							getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS()[k].getLatitudGMS());
-					coordenadasGPS.put("latitud",
+					coordenadasGPS.put("longitud",
 							getLineas()[i].getEstaciones(true)[j].getCoordenadasGPS()[k].getLongitudGMS());
 					listaCoordenadas.put(coordenadasGPS);
 				}

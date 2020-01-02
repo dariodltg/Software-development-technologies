@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.easymock.EasyMock.*;
 
 import org.easymock.Mock;
+import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
@@ -21,6 +23,8 @@ import es.uva.inf.tds.redmetro.Linea;
 
 @Tag("Isolation")
 class RedMetroIsolationTest {
+
+	public static String json;
 
 	@Mock
 	public CoordenadasGPS c1;
@@ -131,6 +135,35 @@ class RedMetroIsolationTest {
 		replay(l3);
 		replay(l4);
 		replay(l5);
+		json = "[\r\n" + "		{\r\n" + "			\"numero\": 1,\r\n" + "			\"color\": \"rojo\",\r\n"
+				+ "			\"estaciones\": [\r\n" + "				{\r\n"
+				+ "					\"nombre\": \"estacion1\",\r\n" + "					\"coordenadasGPS\": [\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'21\\\"O\"\r\n" + "						},\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'20\\\"O\"\r\n" + "						}\r\n"
+				+ "					]\r\n" + "				},\r\n" + "				{\r\n"
+				+ "					\"nombre\": \"estacion2\",\r\n" + "					\"coordenadasGPS\": [\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'19\\\"O\"\r\n" + "						},\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'18\\\"O\"\r\n" + "						}\r\n"
+				+ "					]\r\n" + "				}\r\n" + "			]\r\n" + "		},\r\n" + "		{\r\n"
+				+ "			\"numero\": 2,\r\n" + "			\"color\": \"azul\",\r\n"
+				+ "			\"estaciones\": [\r\n" + "				{\r\n"
+				+ "					\"nombre\": \"estacion1\",\r\n" + "					\"coordenadasGPS\": [\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'21\\\"O\"\r\n" + "						},\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'20\\\"O\"\r\n" + "						}\r\n"
+				+ "					]\r\n" + "				},\r\n" + "				{\r\n"
+				+ "					\"nombre\": \"estacion2\",\r\n" + "					\"coordenadasGPS\": [\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'19\\\"O\"\r\n" + "						},\r\n"
+				+ "						{\r\n" + "							\"latitud\": \"040°42'46\\\"N\",\r\n"
+				+ "							\"longitud\": \"074°00'18\\\"O\"\r\n" + "						}\r\n"
+				+ "					]\r\n" + "				}\r\n" + "			]\r\n" + "		}\r\n" + "	]";
+
 	}
 
 	@Test
@@ -349,18 +382,45 @@ class RedMetroIsolationTest {
 			red.getLineasConexionConTransbordo("estacion3", "estacion1");
 		});
 	}
-	
+
 	@Test
 	public void testGetEstacionesCercanas() {
 		RedMetro red = new RedMetro(l1, l2);
 		Estacion estaciones[] = { e1, e2 };
 		assertArrayEquals(red.getEstacionesCercanas(c1, 10.0), estaciones);
 	}
-	
+
 	@Test
 	public void testGetEstacionesCercanas0Estaciones() {
 		RedMetro red = new RedMetro(l1, l2);
 		Estacion estaciones[] = {};
 		assertArrayEquals(red.getEstacionesCercanas(c5, 1.0), estaciones);
 	}
+
+	@Test
+	public void testGetJSON() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertNotNull(red);
+		try {
+			JSONAssert.assertEquals(red.getJSON(), json, true);
+		} catch (JSONException e) {
+		}
+
+	}
+	
+	/*
+	 * Para testear el constructor a partir de JSON debería hacerse con las clases de las que depende 
+	 * implementadas, no se puede hacer con mocks.
+	@Test
+	public void testConstructorFromJSON() {
+		RedMetro red1 = null;
+		try {
+			red1 = new RedMetro(json);
+		} catch (JSONException e) {
+		}
+		RedMetro red2 = new RedMetro(l1, l2);
+		assertNotNull(red1.getLineas());
+		assertNotNull(red2.getLineas());
+		assertEquals(red1.getLineas(), red2.getLineas());
+	}*/
 }
