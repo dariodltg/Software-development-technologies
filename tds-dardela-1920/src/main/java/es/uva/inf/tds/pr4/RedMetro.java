@@ -22,7 +22,7 @@ public class RedMetro {
 	private ArrayList<Linea> lineas;
 	private ArrayList<Linea> fueraDeServicio;
 	private ArrayList<Linea> lineasTotales;
- 
+
 	/**
 	 * Constructor de una red de líneas de metro.
 	 * 
@@ -38,7 +38,7 @@ public class RedMetro {
 		}
 		this.lineas = new ArrayList<>();
 		fueraDeServicio = new ArrayList<>();
-		lineasTotales=new ArrayList<>();
+		lineasTotales = new ArrayList<>();
 		for (Linea linea : lineas) {
 			this.lineas.add(linea);
 			lineasTotales.add(linea);
@@ -197,7 +197,7 @@ public class RedMetro {
 			throw new IllegalArgumentException("El número no corresponde a ninguna línea");
 		}
 	}
-	
+
 	/**
 	 * Reactiva una línea del servicio de la red dado su número.
 	 * 
@@ -207,7 +207,7 @@ public class RedMetro {
 	 *             si el número no corresponde a ninguna línea.
 	 */
 	public void reactivarLinea(int numero) {
-		boolean encontrado=false;
+		boolean encontrado = false;
 		for (int i = 0; i < fueraDeServicio.size(); i++) {
 			if (getLineas()[i].getNumero() == numero) {
 				encontrado = true;
@@ -228,7 +228,7 @@ public class RedMetro {
 	public Linea[] getLineas() {
 		return lineas.toArray(new Linea[lineas.size()]);
 	}
-	
+
 	/**
 	 * Devuelve un array con todas las líneas que forman la red.
 	 * 
@@ -237,7 +237,7 @@ public class RedMetro {
 	public Linea[] getLineasTotales() {
 		return lineasTotales.toArray(new Linea[lineasTotales.size()]);
 	}
-	
+
 	/**
 	 * Devuelve un array con todas las líneas fuera de servicio que forman la red.
 	 * 
@@ -246,7 +246,6 @@ public class RedMetro {
 	public Linea[] getLineasFueraDeServicio() {
 		return fueraDeServicio.toArray(new Linea[fueraDeServicio.size()]);
 	}
-	
 
 	/**
 	 * Devuelve un array con las líneas que pasan por una estación concreta.
@@ -306,14 +305,12 @@ public class RedMetro {
 	public Estacion[] getEstacionesCorrespondencia(int numL1, int numL2) {
 		Linea l1;
 		Linea l2;
-		try {
-			l1 = getLineaNumero(numL1);
-		} catch (IllegalArgumentException e) {
+		l1 = getLineaNumero(numL1);
+		if (l1 == null) {
 			throw new IllegalArgumentException("El número 1 no corresponde a ninguna línea.");
 		}
-		try {
-			l2 = getLineaNumero(numL2);
-		} catch (IllegalArgumentException e) {
+		l2 = getLineaNumero(numL2);
+		if (l2 == null) {
 			throw new IllegalArgumentException("El número 2 no corresponde a ninguna línea.");
 		}
 		return l1.getCorrespondencias(l2);

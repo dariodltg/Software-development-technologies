@@ -83,6 +83,7 @@ class RedMetroIsolationTest {
 		expect(l2.getEstaciones(true)).andReturn(estaciones2).anyTimes();
 		expect(l2.contieneEstacion(e1)).andReturn(true).anyTimes();
 		expect(l2.contieneEstacion(e2)).andReturn(true).anyTimes();
+		expect(l1.getCorrespondencias(l2)).andReturn(estaciones1);
 		l3 = createMock(Linea.class);
 		expect(l3.getColor()).andReturn("amarillo").anyTimes();
 		expect(l3.getNumero()).andReturn(3).anyTimes();
@@ -176,5 +177,93 @@ class RedMetroIsolationTest {
 		assertNotNull(l2);
 		red.addLinea(l3);
 		assertEquals(red.getLineaColor("amarillo"), l3);
+	}
+	
+	@Test
+	public void testAddLineaNoValidoColorRepetido() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.addLinea(l4);
+		});
+	}
+	
+	@Test
+	public void testAddLineaNoValidoNumeroNoConsecutivo() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.addLinea(l5);
+		});
+	}
+	
+	@Test
+	public void testRemoveLinea() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertNotNull(l1);
+		assertNotNull(l2);
+		red.addLinea(l3);
+		assertEquals(red.getLineaColor("amarillo"), l3);
+		red.removeLinea(3);
+		assertNull(red.getLineaColor("amarillo"));
+	}
+
+	@Test
+	public void testRemoveLineaNumeroInexistente() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.removeLinea(3);
+		});
+	}
+	
+	@Test
+	public void testRemoveLinea2LineasRestantes() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.removeLinea(2);
+		});
+	}
+	
+	@Test
+	public void testGetLineas() {
+		RedMetro red = new RedMetro(l1, l2);
+		Linea[] lineas = { l1, l2 };
+		assertArrayEquals(red.getLineas(), lineas);
+	}
+	
+	@Test
+	public void testGetLineasEstacion() {
+		RedMetro red = new RedMetro(l1, l2);
+		Linea[] lineas = { l1, l2 };
+		assertArrayEquals(red.getLineasEstacion("estacion1"), lineas);
+	}
+
+	@Test
+	public void testGetLineasEstacionNombreInexistente() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getLineasEstacion("estacion3");
+		});
+	}
+	
+	@Test
+	public void testGetEstacionesCorrespondencia() {
+		RedMetro red = new RedMetro(l1, l2);
+		Estacion[] estaciones = { e1, e2 };
+		assertArrayEquals(red.getEstacionesCorrespondencia(1, 2), estaciones);
+	}
+
+	@Test
+	public void testGetEstacionesCorrespondenciaNúmeroInexistente() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getEstacionesCorrespondencia(1, 3);
+		});
+	}
+	
+	@Test
+	public void testGetEstacionesCorrespondenciaPrimerNúmeroInexistente() {
+		RedMetro red = new RedMetro(l1, l2);
+		assertThrows(IllegalArgumentException.class, () -> {
+			red.getEstacionesCorrespondencia(3, 1);
+		});
 	}
 }
