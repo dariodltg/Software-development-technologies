@@ -191,7 +191,7 @@ class RedMetroIsolationTest {
 	@Test
 	public void testConstructorNoValidoColoresRepetidos() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new RedMetro(l1, l3);
+			new RedMetro(l1, l4);
 		});
 	}
 
@@ -249,9 +249,9 @@ class RedMetroIsolationTest {
 
 	@Test
 	public void testRemoveLineaNumeroInexistente() {
-		RedMetro red = new RedMetro(l1, l2);
+		RedMetro red = new RedMetro(l1, l2, l3);
 		assertThrows(IllegalArgumentException.class, () -> {
-			red.removeLinea(3);
+			red.removeLinea(4);
 		});
 	}
 
@@ -407,20 +407,15 @@ class RedMetroIsolationTest {
 		}
 
 	}
-	
+
 	/*
-	 * Para testear el constructor a partir de JSON debería hacerse con las clases de las que depende 
-	 * implementadas, no se puede hacer con mocks.
-	@Test
-	public void testConstructorFromJSON() {
-		RedMetro red1 = null;
-		try {
-			red1 = new RedMetro(json);
-		} catch (JSONException e) {
-		}
-		RedMetro red2 = new RedMetro(l1, l2);
-		assertNotNull(red1.getLineas());
-		assertNotNull(red2.getLineas());
-		assertEquals(red1.getLineas(), red2.getLineas());
-	}*/
+	 * Para testear el constructor a partir de JSON debería hacerse con las clases
+	 * de las que depende implementadas, no se puede hacer con mocks.
+	 * 
+	 * @Test public void testConstructorFromJSON() { RedMetro red1 = null; try {
+	 * red1 = new RedMetro(json); } catch (JSONException e) { } RedMetro red2 = new
+	 * RedMetro(l1, l2); assertNotNull(red1.getLineas());
+	 * assertNotNull(red2.getLineas()); assertEquals(red1.getLineas(),
+	 * red2.getLineas()); }
+	 */
 }
