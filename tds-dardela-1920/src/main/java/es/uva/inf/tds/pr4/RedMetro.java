@@ -72,7 +72,7 @@ public class RedMetro {
 	public RedMetro(String red) throws JSONException {
 		JSONArray array = new JSONArray(red);
 		lineas = new ArrayList<>();
-		lineasTotales= new ArrayList<>();
+		lineasTotales = new ArrayList<>();
 		for (int i = 0; i < array.length(); i++) {
 			JSONObject lineaJSON = array.getJSONObject(i);
 			JSONArray estacionesJSON = lineaJSON.getJSONArray("estaciones");
@@ -334,18 +334,8 @@ public class RedMetro {
 	 */
 	public Linea[] getLineasConexionSinTransbordo(String nombreEstacion1, String nombreEstacion2) {
 		ArrayList<Linea> lineasConexionSinTransbordo = new ArrayList<>();
-		Linea[] lineasEstacion1;
-		Linea[] lineasEstacion2;
-		try {
-			lineasEstacion1 = getLineasEstacion(nombreEstacion1);
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("El nombre 1 no corresponde a ninguna estación.");
-		}
-		try {
-			lineasEstacion2 = getLineasEstacion(nombreEstacion2);
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("El nombre 2 no corresponde a ninguna estación.");
-		}
+		Linea[] lineasEstacion1 = comprobarLineasEstacion1(nombreEstacion1);
+		Linea[] lineasEstacion2 = comprobarLineasEstacion2(nombreEstacion2);
 		if (lineasEstacion1.length < lineasEstacion2.length) {
 			Linea[] aux = lineasEstacion1;
 			lineasEstacion1 = lineasEstacion2;
@@ -359,6 +349,44 @@ public class RedMetro {
 			}
 		}
 		return lineasConexionSinTransbordo.toArray(new Linea[lineasConexionSinTransbordo.size()]);
+	}
+
+	/**
+	 * Comprueba si la estación tiene líneas y las devuelve
+	 * 
+	 * @param nombreEstacion1
+	 *            Nombre de la estación que se quiere comprobar
+	 * @return Un array con las líneas que pasan por la estación.
+	 * @throws IllegalArgumentException
+	 *             si el nombre de la estación no corresponde con ninguna estación.
+	 */
+	private Linea[] comprobarLineasEstacion1(String nombreEstacion1) {
+		Linea[] lineasEstacion1;
+		try {
+			lineasEstacion1 = getLineasEstacion(nombreEstacion1);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("El nombre 1 no corresponde a ninguna estación.");
+		}
+		return lineasEstacion1;
+	}
+
+	/**
+	 * Comprueba si la estación tiene líneas y las devuelve
+	 * 
+	 * @param nombreEstacion2
+	 *            Nombre de la estación que se quiere comprobar
+	 * @return Un array con las líneas que pasan por la estación.
+	 * @throws IllegalArgumentException
+	 *             si el nombre de la estación no corresponde con ninguna estación.
+	 */
+	private Linea[] comprobarLineasEstacion2(String nombreEstacion2) {
+		Linea[] lineasEstacion2;
+		try {
+			lineasEstacion2 = getLineasEstacion(nombreEstacion2);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("El nombre 2 no corresponde a ninguna estación.");
+		}
+		return lineasEstacion2;
 	}
 
 	/**
@@ -380,18 +408,8 @@ public class RedMetro {
 	 */
 	public Linea[] getLineasConexionConTransbordo(String nombreEstacion1, String nombreEstacion2) {
 		ArrayList<Linea> lineasConexionConTransbordo = new ArrayList<>();
-		Linea[] lineasEstacion1;
-		Linea[] lineasEstacion2;
-		try {
-			lineasEstacion1 = getLineasEstacion(nombreEstacion1);
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("El nombre 1 no corresponde a ninguna estación.");
-		}
-		try {
-			lineasEstacion2 = getLineasEstacion(nombreEstacion2);
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("El nombre 2 no corresponde a ninguna estación.");
-		}
+		Linea[] lineasEstacion1 = comprobarLineasEstacion1(nombreEstacion1);
+		Linea[] lineasEstacion2 = comprobarLineasEstacion2(nombreEstacion2);
 		if (lineasEstacion1.length < lineasEstacion2.length) {
 			Linea[] aux = lineasEstacion1;
 			lineasEstacion1 = lineasEstacion2;
