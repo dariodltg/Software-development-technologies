@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.easymock.Mock;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import es.uva.inf.maps.CoordenadasGPS;
 import es.uva.inf.tds.redmetro.Estacion;
 import es.uva.inf.tds.redmetro.Linea;
 
@@ -20,6 +20,7 @@ import es.uva.inf.tds.redmetro.Linea;
  * @author dardela
  *
  */
+@Tag("WhiteBox")
 class RedMetroWhiteBoxTest {
 	@Mock
 	public Estacion e1;

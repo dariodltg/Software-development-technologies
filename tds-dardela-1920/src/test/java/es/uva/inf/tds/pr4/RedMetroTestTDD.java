@@ -2,17 +2,7 @@ package es.uva.inf.tds.pr4;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
-import javax.json.Json;
-import javax.json.JsonReader;
-
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

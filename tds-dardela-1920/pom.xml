@@ -112,11 +112,6 @@
 			<artifactId>jsonassert</artifactId>
 			<version>1.5.0</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.json</groupId>
-			<artifactId>javax.json-api</artifactId>
-			<version>1.0</version>
-		</dependency>
 		<!-- https://repo1.maven.org/maven2/org/json/json/20180813/json-20180813.jar -->
 		<dependency>
 			<groupId>org.json</groupId>
