@@ -209,10 +209,10 @@ public class RedMetro {
 	 */
 	public void reactivarLinea(int numero) {
 		boolean encontrado = false;
-		for (int i = 0; i < fueraDeServicio.size(); i++) {
-			if (getLineas()[i].getNumero() == numero) {
+		for (int i = 0; i < getLineasFueraDeServicio().length; i++) {
+			if (getLineasFueraDeServicio()[i].getNumero() == numero) {
 				encontrado = true;
-				lineas.add(getLineasTotales()[i]);
+				lineas.add(getLineasFueraDeServicio()[i]);
 				break;
 			}
 		}
