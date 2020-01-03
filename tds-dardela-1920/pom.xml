@@ -18,6 +18,17 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<junit.jupiter.version>5.5.2</junit.jupiter.version>
 		<junit.platform.version>1.5.2</junit.platform.version>
+		<sonar.host.url>https://sonarqube.inf.uva.es/</sonar.host.url>
+		<sonar.projectkey>tds-general-for-sonarlint</sonar.projectkey>
+		<sonar.login>2f9570d5a6f0ad7db07e8859ad29256a055e8902</sonar.login>
+		<sonar.password></sonar.password>
+		<sonar.exclusions>
+			/src/main/java/es/uva/inf/maps/CoordenadasGPS.java,
+			/src/main/java/es/uva/inf/tds/redmetro/Estacion.java,
+			/src/main/java/es/uva/inf/tds/redmetro/Linea.java,
+			/src/test/java/es/uva/inf/tds/pr4/RedMetroTDDTest.java,
+			/src/test/java/es/uva/inf/tds/pr4/RedMetroBlackBoxTest.java
+		</sonar.exclusions>
 	</properties>
 	<profiles>
 		<profile>
@@ -95,6 +106,17 @@
 			<artifactId>org.jacoco.agent</artifactId>
 			<version>0.7.9</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.skyscreamer</groupId>
+			<artifactId>jsonassert</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+		<!-- https://repo1.maven.org/maven2/org/json/json/20180813/json-20180813.jar -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
 		</dependency>
 	</dependencies>
 	<build>
